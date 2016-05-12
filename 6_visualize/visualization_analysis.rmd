@@ -10,12 +10,13 @@ output: html_document
 
 ```{r Load libraries_data, eval = TRUE}
 library(magrittr)
-library(dplyr)
 library(tsne)
 library(devtools)
 install_github("vqv/ggbiplot")
 library(ggbiplot)
+library(dplyr)
 library(diffusionMap)
+library(Rtsne)
 
 input_raw <- list(aur1 = "input/Aur-AZ258-1_000000.txt", 
                   aur2 = "input/Aur-AZ841-1_000000.txt",
@@ -44,6 +45,7 @@ dat_1 <- dat %>%
 
 # remove any na if they exist in the data. (Which they dont)
 dat_1 %<>% na.omit()
+dat_1 %<>% unique()
 ######################## For Per cell File ########################
 
 ########################        PCA        ########################
@@ -75,8 +77,9 @@ names(colors) = unique(dat_1$Metadata_Compound)
 ecb = function(x,y){ plot(x,t='n'); text(x,labels=dat_1$Metadata_Compound, col=colors[dat_1$Metadata_Compound]) }
 
 # tsne_dat <- tsne::tsne(dat_1[, 1:(ncol(dat_1) -1)], epoch_callback = ecb, perplexity=2, max_iter = 10)
-
-
+tsne_dat <- Rtsne::Rtsne(dat_1[, 1:(ncol(dat_1) -1)])
+summary(tsne_dat)
+plot(tsne_dat$Y,col=dat_1$Metadata_Compound)
 
 
 ########################   DiffusionMap    ########################
@@ -94,4 +97,4 @@ hc <- hclust(dist(dat_1[, 1:(ncol(dat_1) -1)]))
 
 ```
 
-# packages <- c("magrittr", "dplyr", "ggplot2", "ggbiplot", "tsne", "foreach", "readr", "plyr", "devtools", "caret", "knitr", "igraph", "pryr", "shiny", "tidyr", "diffusionMap") # just a list of important packages used.
+# packages <- c("magrittr", "dplyr", "ggplot2", "ggbiplot", "tsne", "foreach", "readr", "plyr", "devtools", "caret", "knitr", "igraph", "pryr", "shiny", "tidyr", "diffusionMap", "Rtsne") # just a list of important packages used.

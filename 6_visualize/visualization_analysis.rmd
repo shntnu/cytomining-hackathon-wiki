@@ -15,6 +15,7 @@ library(tsne)
 library(devtools)
 install_github("vqv/ggbiplot")
 library(ggbiplot)
+library(diffusionMap)
 
 input_raw <- list(aur1 = "input/Aur-AZ258-1_000000.txt", 
                   aur2 = "input/Aur-AZ841-1_000000.txt",
@@ -59,7 +60,8 @@ g <- ggbiplot(pca, obs.scale = 1, var.scale = 1,
               #groups = input_data.groundtruth, 
               ellipse = TRUE, 
               circle = TRUE,
-              alpha = 0.1)
+              alpha = 0.1,
+              var.axes = FALSE)
 g <- g + scale_color_discrete(name = '')
 g <- g + theme(legend.direction = 'horizontal', 
                legend.position = 'top')
@@ -76,6 +78,14 @@ ecb = function(x,y){ plot(x,t='n'); text(x,labels=dat_1$Metadata_Compound, col=c
 
 
 
+
+########################   DiffusionMap    ########################
+
+D = dist(dat_1[, 1:(ncol(dat_1) -1)]) # use Euclidean distance
+dmap = diffuse(D, eps.val=0.05) # compute diffusion map
+k=2  # number of clusters
+dkmeans = diffusionKmeans(dmap, k)
+
 ######################## For Per Well File ########################
 
 ########################          HC       ########################
@@ -84,4 +94,4 @@ hc <- hclust(dist(dat_1[, 1:(ncol(dat_1) -1)]))
 
 ```
 
-# packages <- c("magrittr", "dplyr", "ggplot2", "ggbiplot", "tsne", "foreach", "readr", "plyr", "devtools", "caret", "knitr", "igraph", "pryr", "shiny", "tidyr") # just a list of important packages used.
+# packages <- c("magrittr", "dplyr", "ggplot2", "ggbiplot", "tsne", "foreach", "readr", "plyr", "devtools", "caret", "knitr", "igraph", "pryr", "shiny", "tidyr", "diffusionMap") # just a list of important packages used.

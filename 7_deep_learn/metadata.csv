@@ -1,0 +1,301 @@
+compound,concentration,replicate,moa
+ALLN,100.000,1,Protein degradation
+ALLN,100.000,2,Protein degradation
+ALLN,100.000,3,Protein degradation
+ALLN,3.000,1,Protein degradation
+ALLN,3.000,2,Protein degradation
+ALLN,3.000,3,Protein degradation
+AZ-A,0.100,1,Aurora kinase inhibitors
+AZ-A,0.100,2,Aurora kinase inhibitors
+AZ-A,0.100,3,Aurora kinase inhibitors
+AZ-A,0.300,1,Aurora kinase inhibitors
+AZ-A,0.300,2,Aurora kinase inhibitors
+AZ-A,0.300,3,Aurora kinase inhibitors
+AZ-A,1.000,1,Aurora kinase inhibitors
+AZ-A,1.000,2,Aurora kinase inhibitors
+AZ-A,1.000,3,Aurora kinase inhibitors
+AZ-A,10.000,1,Aurora kinase inhibitors
+AZ-A,10.000,2,Aurora kinase inhibitors
+AZ-A,10.000,3,Aurora kinase inhibitors
+AZ-A,3.000,1,Aurora kinase inhibitors
+AZ-A,3.000,2,Aurora kinase inhibitors
+AZ-A,3.000,3,Aurora kinase inhibitors
+AZ-A,30.000,1,Aurora kinase inhibitors
+AZ-A,30.000,2,Aurora kinase inhibitors
+AZ-A,30.000,3,Aurora kinase inhibitors
+AZ-C,0.001,1,Eg5 inhibitors
+AZ-C,0.001,2,Eg5 inhibitors
+AZ-C,0.001,3,Eg5 inhibitors
+AZ-C,0.003,1,Eg5 inhibitors
+AZ-C,0.003,2,Eg5 inhibitors
+AZ-C,0.003,3,Eg5 inhibitors
+AZ-C,0.010,1,Eg5 inhibitors
+AZ-C,0.010,2,Eg5 inhibitors
+AZ-C,0.010,3,Eg5 inhibitors
+AZ-C,0.030,1,Eg5 inhibitors
+AZ-C,0.030,2,Eg5 inhibitors
+AZ-C,0.030,3,Eg5 inhibitors
+AZ-C,0.100,1,Eg5 inhibitors
+AZ-C,0.100,2,Eg5 inhibitors
+AZ-C,0.100,3,Eg5 inhibitors
+AZ-C,0.300,1,Eg5 inhibitors
+AZ-C,0.300,2,Eg5 inhibitors
+AZ-C,0.300,3,Eg5 inhibitors
+AZ-C,1.000,1,Eg5 inhibitors
+AZ-C,1.000,2,Eg5 inhibitors
+AZ-C,1.000,3,Eg5 inhibitors
+AZ-J,1.000,1,Epithelial
+AZ-J,1.000,2,Epithelial
+AZ-J,1.000,3,Epithelial
+AZ-J,10.000,1,Epithelial
+AZ-J,10.000,2,Epithelial
+AZ-J,10.000,3,Epithelial
+AZ-J,3.000,1,Epithelial
+AZ-J,3.000,2,Epithelial
+AZ-J,3.000,3,Epithelial
+AZ-U,1.000,1,Epithelial
+AZ-U,1.000,2,Epithelial
+AZ-U,1.000,3,Epithelial
+AZ-U,10.000,1,Epithelial
+AZ-U,10.000,2,Epithelial
+AZ-U,10.000,3,Epithelial
+AZ-U,3.000,1,Epithelial
+AZ-U,3.000,2,Epithelial
+AZ-U,3.000,3,Epithelial
+AZ138,0.030,1,Eg5 inhibitors
+AZ138,0.030,2,Eg5 inhibitors
+AZ138,0.030,3,Eg5 inhibitors
+AZ138,0.100,1,Eg5 inhibitors
+AZ138,0.100,2,Eg5 inhibitors
+AZ138,0.100,3,Eg5 inhibitors
+AZ138,0.300,1,Eg5 inhibitors
+AZ138,0.300,2,Eg5 inhibitors
+AZ138,0.300,3,Eg5 inhibitors
+AZ138,1.000,1,Eg5 inhibitors
+AZ138,1.000,2,Eg5 inhibitors
+AZ138,1.000,3,Eg5 inhibitors
+AZ138,3.000,1,Eg5 inhibitors
+AZ138,3.000,2,Eg5 inhibitors
+AZ138,3.000,3,Eg5 inhibitors
+AZ258,0.100,1,Aurora kinase inhibitors
+AZ258,0.100,2,Aurora kinase inhibitors
+AZ258,0.100,3,Aurora kinase inhibitors
+AZ258,0.300,1,Aurora kinase inhibitors
+AZ258,0.300,2,Aurora kinase inhibitors
+AZ258,0.300,3,Aurora kinase inhibitors
+AZ258,1.000,1,Aurora kinase inhibitors
+AZ258,1.000,2,Aurora kinase inhibitors
+AZ258,1.000,3,Aurora kinase inhibitors
+AZ841,0.100,1,Aurora kinase inhibitors
+AZ841,0.100,2,Aurora kinase inhibitors
+AZ841,0.100,3,Aurora kinase inhibitors
+AZ841,0.300,1,Aurora kinase inhibitors
+AZ841,0.300,2,Aurora kinase inhibitors
+AZ841,0.300,3,Aurora kinase inhibitors
+AZ841,1.000,1,Aurora kinase inhibitors
+AZ841,1.000,2,Aurora kinase inhibitors
+AZ841,1.000,3,Aurora kinase inhibitors
+DMSO,0.000,1,DMSO
+DMSO,0.000,2,DMSO
+DMSO,0.000,3,DMSO
+MG-132,0.100,1,Protein degradation
+MG-132,0.100,2,Protein degradation
+MG-132,0.100,3,Protein degradation
+MG-132,3.000,1,Protein degradation
+MG-132,3.000,2,Protein degradation
+MG-132,3.000,3,Protein degradation
+PD-169316,10.000,2,Kinase inhibitors
+PD-169316,10.000,3,Kinase inhibitors
+PD-169316,3.000,2,Kinase inhibitors
+PD-169316,3.000,3,Kinase inhibitors
+PP-2,10.000,1,Epithelial
+PP-2,10.000,2,Epithelial
+PP-2,3.000,1,Epithelial
+PP-2,3.000,2,Epithelial
+alsterpaullone,1.000,2,Kinase inhibitors
+alsterpaullone,1.000,3,Kinase inhibitors
+alsterpaullone,3.000,2,Kinase inhibitors
+alsterpaullone,3.000,3,Kinase inhibitors
+anisomycin,0.300,1,Protein synthesis
+anisomycin,0.300,2,Protein synthesis
+anisomycin,0.300,3,Protein synthesis
+anisomycin,1.000,1,Protein synthesis
+anisomycin,1.000,2,Protein synthesis
+anisomycin,1.000,3,Protein synthesis
+bryostatin,0.300,2,Kinase inhibitors
+bryostatin,0.300,3,Kinase inhibitors
+camptothecin,0.003,1,DNA replication
+camptothecin,0.003,2,DNA replication
+camptothecin,0.003,3,DNA replication
+camptothecin,0.010,1,DNA replication
+camptothecin,0.010,2,DNA replication
+camptothecin,0.010,3,DNA replication
+camptothecin,0.030,1,DNA replication
+camptothecin,0.030,2,DNA replication
+camptothecin,0.030,3,DNA replication
+chlorambucil,10.000,1,DNA damage
+chlorambucil,10.000,2,DNA damage
+chlorambucil,10.000,3,DNA damage
+cisplatin,10.000,1,DNA damage
+cisplatin,10.000,2,DNA damage
+cisplatin,10.000,3,DNA damage
+colchicine,0.030,1,Microtubule destabilizers
+colchicine,0.030,2,Microtubule destabilizers
+colchicine,0.030,3,Microtubule destabilizers
+cyclohexamide,15.000,1,Protein synthesis
+cyclohexamide,15.000,2,Protein synthesis
+cyclohexamide,15.000,3,Protein synthesis
+cyclohexamide,5.000,1,Protein synthesis
+cyclohexamide,5.000,2,Protein synthesis
+cyclohexamide,5.000,3,Protein synthesis
+cyclohexamide,50.000,1,Protein synthesis
+cyclohexamide,50.000,2,Protein synthesis
+cyclohexamide,50.000,3,Protein synthesis
+cytochalasin B,10.000,1,Actin disruptors
+cytochalasin B,10.000,2,Actin disruptors
+cytochalasin B,10.000,3,Actin disruptors
+cytochalasin B,30.000,1,Actin disruptors
+cytochalasin B,30.000,2,Actin disruptors
+cytochalasin B,30.000,3,Actin disruptors
+cytochalasin D,0.300,1,Actin disruptors
+cytochalasin D,0.300,2,Actin disruptors
+cytochalasin D,0.300,3,Actin disruptors
+demecolcine,0.300,1,Microtubule destabilizers
+demecolcine,0.300,2,Microtubule destabilizers
+demecolcine,0.300,3,Microtubule destabilizers
+demecolcine,1.000,1,Microtubule destabilizers
+demecolcine,1.000,2,Microtubule destabilizers
+demecolcine,1.000,3,Microtubule destabilizers
+demecolcine,10.000,1,Microtubule destabilizers
+demecolcine,10.000,2,Microtubule destabilizers
+demecolcine,10.000,3,Microtubule destabilizers
+demecolcine,3.000,1,Microtubule destabilizers
+demecolcine,3.000,2,Microtubule destabilizers
+demecolcine,3.000,3,Microtubule destabilizers
+docetaxel,0.030,1,Microtubule stabilizers
+docetaxel,0.030,3,Microtubule stabilizers
+docetaxel,0.100,1,Microtubule stabilizers
+docetaxel,0.100,3,Microtubule stabilizers
+docetaxel,0.300,1,Microtubule stabilizers
+docetaxel,0.300,3,Microtubule stabilizers
+emetine,0.100,1,Protein synthesis
+emetine,0.100,2,Protein synthesis
+emetine,0.100,3,Protein synthesis
+emetine,0.300,1,Protein synthesis
+emetine,0.300,2,Protein synthesis
+emetine,0.300,3,Protein synthesis
+emetine,1.000,1,Protein synthesis
+emetine,1.000,2,Protein synthesis
+emetine,1.000,3,Protein synthesis
+epothilone B,0.100,1,Microtubule stabilizers
+epothilone B,0.100,2,Microtubule stabilizers
+epothilone B,0.100,3,Microtubule stabilizers
+epothilone B,0.300,1,Microtubule stabilizers
+epothilone B,0.300,2,Microtubule stabilizers
+epothilone B,0.300,3,Microtubule stabilizers
+epothilone B,1.000,1,Microtubule stabilizers
+epothilone B,1.000,2,Microtubule stabilizers
+epothilone B,1.000,3,Microtubule stabilizers
+etoposide,1.000,1,DNA damage
+etoposide,1.000,2,DNA damage
+etoposide,1.000,3,DNA damage
+etoposide,10.000,1,DNA damage
+etoposide,10.000,2,DNA damage
+etoposide,10.000,3,DNA damage
+etoposide,3.000,1,DNA damage
+etoposide,3.000,2,DNA damage
+etoposide,3.000,3,DNA damage
+floxuridine,10.000,1,DNA replication
+floxuridine,10.000,2,DNA replication
+floxuridine,10.000,3,DNA replication
+floxuridine,30.000,1,DNA replication
+floxuridine,30.000,2,DNA replication
+floxuridine,30.000,3,DNA replication
+lactacystin,10.000,1,Protein degradation
+lactacystin,10.000,2,Protein degradation
+lactacystin,10.000,3,Protein degradation
+latrunculin B,1.000,1,Actin disruptors
+latrunculin B,1.000,2,Actin disruptors
+latrunculin B,1.000,3,Actin disruptors
+latrunculin B,3.000,1,Actin disruptors
+latrunculin B,3.000,2,Actin disruptors
+latrunculin B,3.000,3,Actin disruptors
+methotrexate,10.000,1,DNA replication
+methotrexate,10.000,2,DNA replication
+methotrexate,10.000,3,DNA replication
+mevinolin_lovastatin,1.500,1,Cholesterol-lowering
+mevinolin_lovastatin,1.500,2,Cholesterol-lowering
+mevinolin_lovastatin,1.500,3,Cholesterol-lowering
+mevinolin_lovastatin,15.000,1,Cholesterol-lowering
+mevinolin_lovastatin,15.000,2,Cholesterol-lowering
+mevinolin_lovastatin,15.000,3,Cholesterol-lowering
+mevinolin_lovastatin,5.000,1,Cholesterol-lowering
+mevinolin_lovastatin,5.000,2,Cholesterol-lowering
+mevinolin_lovastatin,5.000,3,Cholesterol-lowering
+mitomycin C,0.100,1,DNA damage
+mitomycin C,0.100,2,DNA damage
+mitomycin C,0.100,3,DNA damage
+mitomycin C,0.300,1,DNA damage
+mitomycin C,0.300,2,DNA damage
+mitomycin C,0.300,3,DNA damage
+mitomycin C,1.000,1,DNA damage
+mitomycin C,1.000,2,DNA damage
+mitomycin C,1.000,3,DNA damage
+mitomycin C,3.000,1,DNA damage
+mitomycin C,3.000,2,DNA damage
+mitomycin C,3.000,3,DNA damage
+mitoxantrone,0.003,1,DNA replication
+mitoxantrone,0.003,2,DNA replication
+mitoxantrone,0.003,3,DNA replication
+mitoxantrone,0.010,1,DNA replication
+mitoxantrone,0.010,2,DNA replication
+mitoxantrone,0.010,3,DNA replication
+nocodazole,1.000,1,Microtubule destabilizers
+nocodazole,1.000,2,Microtubule destabilizers
+nocodazole,1.000,3,Microtubule destabilizers
+nocodazole,3.000,1,Microtubule destabilizers
+nocodazole,3.000,2,Microtubule destabilizers
+nocodazole,3.000,3,Microtubule destabilizers
+proteasome inhibitor I,0.100,1,Protein degradation
+proteasome inhibitor I,0.100,3,Protein degradation
+proteasome inhibitor I,3.000,1,Protein degradation
+proteasome inhibitor I,3.000,3,Protein degradation
+simvastatin,2.000,1,Cholesterol-lowering
+simvastatin,2.000,2,Cholesterol-lowering
+simvastatin,2.000,3,Cholesterol-lowering
+simvastatin,20.000,1,Cholesterol-lowering
+simvastatin,20.000,2,Cholesterol-lowering
+simvastatin,20.000,3,Cholesterol-lowering
+simvastatin,6.000,1,Cholesterol-lowering
+simvastatin,6.000,2,Cholesterol-lowering
+simvastatin,6.000,3,Cholesterol-lowering
+taxol,0.300,1,Microtubule stabilizers
+taxol,0.300,2,Microtubule stabilizers
+taxol,0.300,3,Microtubule stabilizers
+taxol,1.000,1,Microtubule stabilizers
+taxol,1.000,2,Microtubule stabilizers
+taxol,1.000,3,Microtubule stabilizers
+taxol,3.000,1,Microtubule stabilizers
+taxol,3.000,2,Microtubule stabilizers
+taxol,3.000,3,Microtubule stabilizers
+vincristine,0.003,1,Microtubule destabilizers
+vincristine,0.003,2,Microtubule destabilizers
+vincristine,0.003,3,Microtubule destabilizers
+vincristine,0.010,1,Microtubule destabilizers
+vincristine,0.010,2,Microtubule destabilizers
+vincristine,0.010,3,Microtubule destabilizers
+vincristine,0.030,1,Microtubule destabilizers
+vincristine,0.030,2,Microtubule destabilizers
+vincristine,0.030,3,Microtubule destabilizers
+vincristine,0.100,1,Microtubule destabilizers
+vincristine,0.100,2,Microtubule destabilizers
+vincristine,0.100,3,Microtubule destabilizers
+vincristine,0.300,1,Microtubule destabilizers
+vincristine,0.300,2,Microtubule destabilizers
+vincristine,0.300,3,Microtubule destabilizers
+vincristine,1.000,1,Microtubule destabilizers
+vincristine,1.000,2,Microtubule destabilizers
+vincristine,1.000,3,Microtubule destabilizers
+vincristine,3.000,1,Microtubule destabilizers
+vincristine,3.000,2,Microtubule destabilizers
+vincristine,3.000,3,Microtubule destabilizers

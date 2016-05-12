@@ -82,7 +82,7 @@ feat.cols <- function(data) {
 
 feat.names <- feat.cols(data = data.new)
 
-#aggr.func <- function(x) mean(x, 0.1)
+aggr.func <- function(x) mean(x, 0.1)
 #aggr.func <- mean
 
 profiles <- profile.data(data.new, "Image_Metadata_sample.id", feat.names, c("Image_Metadata_Compound", "Image_Metadata_Concentration", "Image_Metadata_MOA", "Image_Metadata_sample.id"), aggr.func)

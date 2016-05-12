@@ -1,0 +1,48 @@
+---
+title: "siRNA screen"
+date: "`r Sys.time()`"
+output: html_document
+---
+
+```{r Load libraries_data, eval = TRUE}
+library(magrittr)
+input_raw <- list(aur1 = "input/Aur-AZ258-1_000000.txt", 
+                  aur2 = "input/Aur-AZ841-1_000000.txt",
+                  aur3 = "input/Aur-AZ-A-1_000000.txt",
+                  ki1 = "input/Ki-alsterpaullone-3_000000.txt",
+                  ki2 = "input/Ki-bryostatin-0_300000.txt",
+                  ki3 = "input/Ki-PD-169316-10_000000.txt")
+
+######################## Data Read ########################
+dat <- list(aur1 = read.delim(input_raw$aur1, header = TRUE, sep = "\t", check.names = FALSE) %>%  as.data.frame() %>%
+              dplyr::mutate(Metadata_Compound = "aur1"), 
+            aur2 = read.delim(input_raw$aur2, header = TRUE, sep = "\t", check.names = FALSE) %>%  as.data.frame() %>%
+              dplyr::mutate(Metadata_Compound = "aur2"),
+            aur3 = read.delim(input_raw$aur3, header = TRUE, sep = "\t", check.names = FALSE) %>%  as.data.frame() %>%
+              dplyr::mutate(Metadata_Compound = "aur3"),
+            ki1 = read.delim(input_raw$ki1, header = TRUE, sep = "\t", check.names = FALSE) %>%  as.data.frame() %>%
+              dplyr::mutate(Metadata_Compound = "ki1"), 
+            ki2 = read.delim(input_raw$ki1, header = TRUE, sep = "\t", check.names = FALSE) %>%  as.data.frame() %>%
+              dplyr::mutate(Metadata_Compound = "ki1"),
+            ki3 = read.delim(input_raw$ki1, header = TRUE, sep = "\t", check.names = FALSE) %>%  as.data.frame() %>%
+              dplyr::mutate(Metadata_Compound = "ki1"))
+
+# h <- dat[[2]]
+dat_1 <- dat %>%
+  dplyr::bind_rows() 
+
+
+######################## TSNE ########################
+colors = rainbow(length(unique(dat_1$Metadata_Compound)))
+names(colors) = unique(dat_1$Metadata_Compound)
+
+ecb = function(x,y){ plot(x,t='n'); text(x,labels=dat_1$Metadata_Compound, col=colors[dat_1$Metadata_Compound]) }
+
+# tsne_dat <- tsne::tsne(dat_1[, 1:(ncol(dat_1) -1)], epoch_callback = ecb, perplexity=2, max_iter = 10)
+
+
+
+```
+
+tsne_output <- tsne::tsne(dat_1[, 1:(ncol(dat_1) -1)], initial_config = NULL, k = 2, initial_dims = 30, perplexity = 30, max_iter = 1000, min_cost = 0, epoch_callback = NULL, whiten = TRUE, epoch=100)
+

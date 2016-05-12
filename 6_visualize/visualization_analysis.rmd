@@ -60,4 +60,4 @@ hc <- hclust(dist(dat_1[, 1:(ncol(dat_1) -1)]))
 
 ```
 
-
+# packages <- c("magrittr", "dplyr", "ggplot2", "ggbiplot", "tsne", "foreach", "readr", "plyr", "devtools", "caret", "knitr", "igraph", "pryr", "shiny", "tidyr") # just a list of important packages used.

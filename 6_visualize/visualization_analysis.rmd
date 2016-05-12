@@ -1,13 +1,18 @@
 ---
-title: "siRNA screen"
+title: "Hackathon: Visualization"
 date: "`r Sys.time()`"
 output: html_document
 ---
+
+# to install ggbiplot:
+#library(devtools)
+#install_github("vqv/ggbiplot")
 
 ```{r Load libraries_data, eval = TRUE}
 library(magrittr)
 library(dplyr)
 library(tsne)
+library(ggbiplot)
 
 input_raw <- list(aur1 = "input/Aur-AZ258-1_000000.txt", 
                   aur2 = "input/Aur-AZ841-1_000000.txt",
@@ -42,6 +47,21 @@ dat_1 %<>% na.omit()
 pca <- prcomp(dat_1[, 1:(ncol(dat_1) -1)])
 plot(pca)
 biplot(pca)
+
+summary(pca)
+pca$sdev
+pca$rotation
+screeplot(pca)
+
+g <- ggbiplot(pca, obs.scale = 1, var.scale = 1, 
+              groups = input_data.groundtruth, ellipse = TRUE, 
+              circle = TRUE)
+g <- g + scale_color_discrete(name = '')
+g <- g + theme(legend.direction = 'horizontal', 
+               legend.position = 'top')
+print(g)
+
+
 ########################        TSNE       ########################
 colors = rainbow(length(unique(dat_1$Metadata_Compound)))
 names(colors) = unique(dat_1$Metadata_Compound)

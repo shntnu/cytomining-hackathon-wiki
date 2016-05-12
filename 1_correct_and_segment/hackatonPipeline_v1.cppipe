@@ -1,0 +1,340 @@
+CellProfiler Pipeline: http://www.cellprofiler.org
+Version:3
+DateRevision:20140723174500
+GitHash:6c2d896
+ModuleCount:18
+HasImagePlaneDetails:False
+
+LoadData:[module_num:1|svn_version:\'Unknown\'|variable_revision_number:6|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Input data file location:Elsewhere...\x7CD\x3A\\\\Projects\\\\Cytomining hackaton
+    Name of the file:testPlaceWeek1.csv
+    Load images based on this data?:Yes
+    Base image location:Default Input Folder\x7C
+    Process just a range of rows?:No
+    Rows to process:1,1
+    Group images by metadata?:Yes
+    Select metadata tags for grouping:Plate_DAPI
+    Rescale intensities?:Yes
+
+IdentifyPrimaryObjects:[module_num:2|svn_version:\'Unknown\'|variable_revision_number:10|show_window:True|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:DAPI
+    Name the primary objects to be identified:Nuclear_Debris
+    Typical diameter of objects, in pixel units (Min,Max):90,99999
+    Discard objects outside the diameter range?:Yes
+    Try to merge too small objects with nearby larger objects?:No
+    Discard objects touching the border of the image?:No
+    Method to distinguish clumped objects:None
+    Method to draw dividing lines between clumped objects:Intensity
+    Size of smoothing filter:10
+    Suppress local maxima that are closer than this minimum allowed distance:7.0
+    Speed up by using lower-resolution image to find local maxima?:Yes
+    Name the outline image:PrimaryOutlines
+    Fill holes in identified objects?:Never
+    Automatically calculate size of smoothing filter for declumping?:Yes
+    Automatically calculate minimum allowed distance between local maxima?:Yes
+    Retain outlines of the identified objects?:No
+    Automatically calculate the threshold using the Otsu method?:Yes
+    Enter Laplacian of Gaussian threshold:0.5
+    Automatically calculate the size of objects for the Laplacian of Gaussian filter?:Yes
+    Enter LoG filter diameter:5.0
+    Handling of objects if excessive number of objects identified:Continue
+    Maximum number of objects:500
+    Threshold setting version:1
+    Threshold strategy:Adaptive
+    Thresholding method:Otsu
+    Select the smoothing method for thresholding:Automatic
+    Threshold smoothing scale:1.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.01,1.0
+    Approximate fraction of image covered by objects?:0.01
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Select binary image:None
+    Masking objects:None
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Method to calculate adaptive window size:Image size
+    Size of adaptive window:10
+
+MeasureObjectIntensity:[module_num:3|svn_version:\'Unknown\'|variable_revision_number:3|show_window:True|notes:\x5B\'\'\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Hidden:1
+    Select an image to measure:DAPI
+    Select objects to measure:Nuclear_Debris
+
+MaskImage:[module_num:4|svn_version:\'Unknown\'|variable_revision_number:3|show_window:True|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:DAPI
+    Name the output image:MaskedNuclearImage
+    Use objects or an image as a mask?:Objects
+    Select object for mask:Nuclear_Debris
+    Select image for mask:None
+    Invert the mask?:Yes
+
+IdentifyPrimaryObjects:[module_num:5|svn_version:\'Unknown\'|variable_revision_number:10|show_window:True|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:MaskedNuclearImage
+    Name the primary objects to be identified:Nuclei
+    Typical diameter of objects, in pixel units (Min,Max):10,65
+    Discard objects outside the diameter range?:Yes
+    Try to merge too small objects with nearby larger objects?:No
+    Discard objects touching the border of the image?:Yes
+    Method to distinguish clumped objects:Shape
+    Method to draw dividing lines between clumped objects:Shape
+    Size of smoothing filter:10
+    Suppress local maxima that are closer than this minimum allowed distance:7.0
+    Speed up by using lower-resolution image to find local maxima?:Yes
+    Name the outline image:PrimaryOutlines
+    Fill holes in identified objects?:After both thresholding and declumping
+    Automatically calculate size of smoothing filter for declumping?:Yes
+    Automatically calculate minimum allowed distance between local maxima?:Yes
+    Retain outlines of the identified objects?:No
+    Automatically calculate the threshold using the Otsu method?:Yes
+    Enter Laplacian of Gaussian threshold:0.5
+    Automatically calculate the size of objects for the Laplacian of Gaussian filter?:Yes
+    Enter LoG filter diameter:5.0
+    Handling of objects if excessive number of objects identified:Continue
+    Maximum number of objects:500
+    Threshold setting version:1
+    Threshold strategy:Adaptive
+    Thresholding method:Otsu
+    Select the smoothing method for thresholding:Automatic
+    Threshold smoothing scale:1.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.01,1.0
+    Approximate fraction of image covered by objects?:0.01
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Select binary image:None
+    Masking objects:None
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Method to calculate adaptive window size:Image size
+    Size of adaptive window:10
+
+MeasureObjectSizeShape:[module_num:6|svn_version:\'Unknown\'|variable_revision_number:1|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select objects to measure:Nuclei
+    Calculate the Zernike features?:Yes
+
+FilterObjects:[module_num:7|svn_version:\'Unknown\'|variable_revision_number:7|show_window:True|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Name the output objects:Valid_Nuclei
+    Select the object to filter:Nuclei
+    Select the filtering mode:Measurements
+    Select the filtering method:Limits
+    Select the objects that contain the filtered objects:None
+    Retain outlines of the identified objects?:No
+    Name the outline image:FilteredObjects
+    Rules file location:Elsewhere...\x7C
+    Rules file name:rules.txt
+    Class number:1
+    Measurement count:1
+    Additional object count:0
+    Assign overlapping child to:Both parents
+    Select the measurement to filter by:AreaShape_FormFactor
+    Filter using a minimum measurement value?:Yes
+    Minimum value:0.6
+    Filter using a maximum measurement value?:No
+    Maximum value:1.0
+
+IdentifySecondaryObjects:[module_num:8|svn_version:\'Unknown\'|variable_revision_number:9|show_window:True|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input objects:Valid_Nuclei
+    Name the objects to be identified:Cells
+    Select the method to identify the secondary objects:Distance - N
+    Select the input image:MaskedNuclearImage
+    Number of pixels by which to expand the primary objects:10
+    Regularization factor:0.05
+    Name the outline image:SecondaryOutlines
+    Retain outlines of the identified secondary objects?:No
+    Discard secondary objects touching the border of the image?:No
+    Discard the associated primary objects?:No
+    Name the new primary objects:FilteredNuclei
+    Retain outlines of the new primary objects?:No
+    Name the new primary object outlines:FilteredNucleiOutlines
+    Fill holes in identified objects?:Yes
+    Threshold setting version:1
+    Threshold strategy:Automatic
+    Thresholding method:Otsu
+    Select the smoothing method for thresholding:No smoothing
+    Threshold smoothing scale:1.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.0,1.0
+    Approximate fraction of image covered by objects?:0.01
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Select binary image:None
+    Masking objects:None
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Method to calculate adaptive window size:Image size
+    Size of adaptive window:10
+
+MeasureImageIntensity:[module_num:9|svn_version:\'Unknown\'|variable_revision_number:2|show_window:False|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the image to measure:Actin
+    Measure the intensity only from areas enclosed by objects?:Yes
+    Select the input objects:Cells
+    Select the image to measure:Tubulin
+    Measure the intensity only from areas enclosed by objects?:Yes
+    Select the input objects:Cells
+
+IdentifySecondaryObjects:[module_num:10|svn_version:\'Unknown\'|variable_revision_number:9|show_window:True|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input objects:Nuclei
+    Name the objects to be identified:Cells_Actin
+    Select the method to identify the secondary objects:Propagation
+    Select the input image:Actin
+    Number of pixels by which to expand the primary objects:10
+    Regularization factor:0.05
+    Name the outline image:SecondaryOutlines
+    Retain outlines of the identified secondary objects?:No
+    Discard secondary objects touching the border of the image?:No
+    Discard the associated primary objects?:No
+    Name the new primary objects:FilteredNuclei
+    Retain outlines of the new primary objects?:No
+    Name the new primary object outlines:FilteredNucleiOutlines
+    Fill holes in identified objects?:Yes
+    Threshold setting version:1
+    Threshold strategy:Automatic
+    Thresholding method:Otsu
+    Select the smoothing method for thresholding:No smoothing
+    Threshold smoothing scale:1.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.0,1.0
+    Approximate fraction of image covered by objects?:0.01
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Select binary image:None
+    Masking objects:None
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Method to calculate adaptive window size:Image size
+    Size of adaptive window:10
+
+IdentifySecondaryObjects:[module_num:11|svn_version:\'Unknown\'|variable_revision_number:9|show_window:True|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input objects:Nuclei
+    Name the objects to be identified:Cells_Tubuline
+    Select the method to identify the secondary objects:Propagation
+    Select the input image:Tubulin
+    Number of pixels by which to expand the primary objects:10
+    Regularization factor:0.02
+    Name the outline image:SecondaryOutlines
+    Retain outlines of the identified secondary objects?:No
+    Discard secondary objects touching the border of the image?:No
+    Discard the associated primary objects?:No
+    Name the new primary objects:FilteredNuclei
+    Retain outlines of the new primary objects?:No
+    Name the new primary object outlines:FilteredNucleiOutlines
+    Fill holes in identified objects?:Yes
+    Threshold setting version:1
+    Threshold strategy:Automatic
+    Thresholding method:Otsu
+    Select the smoothing method for thresholding:No smoothing
+    Threshold smoothing scale:1.0
+    Threshold correction factor:1.0
+    Lower and upper bounds on threshold:0.0,1.0
+    Approximate fraction of image covered by objects?:0.01
+    Manual threshold:0.0
+    Select the measurement to threshold with:None
+    Select binary image:None
+    Masking objects:None
+    Two-class or three-class thresholding?:Two classes
+    Minimize the weighted variance or the entropy?:Weighted variance
+    Assign pixels in the middle intensity class to the foreground or the background?:Foreground
+    Method to calculate adaptive window size:Image size
+    Size of adaptive window:10
+
+MeasureObjectSizeShape:[module_num:12|svn_version:\'Unknown\'|variable_revision_number:1|show_window:True|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select objects to measure:Cells_Actin
+    Select objects to measure:Cells_Tubuline
+    Select objects to measure:Cells
+    Calculate the Zernike features?:Yes
+
+MeasureObjectIntensity:[module_num:13|svn_version:\'Unknown\'|variable_revision_number:3|show_window:True|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Hidden:2
+    Select an image to measure:Actin
+    Select an image to measure:Tubulin
+    Select objects to measure:Cells
+    Select objects to measure:Cells_Actin
+    Select objects to measure:Cells_Tubuline
+
+MeasureImageIntensity:[module_num:14|svn_version:\'Unknown\'|variable_revision_number:2|show_window:True|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Select the image to measure:MaskedNuclearImage
+    Measure the intensity only from areas enclosed by objects?:No
+    Select the input objects:None
+    Select the image to measure:Actin
+    Measure the intensity only from areas enclosed by objects?:No
+    Select the input objects:None
+    Select the image to measure:Tubulin
+    Measure the intensity only from areas enclosed by objects?:No
+    Select the input objects:None
+
+MeasureImageAreaOccupied:[module_num:15|svn_version:\'Unknown\'|variable_revision_number:3|show_window:True|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Hidden:3
+    Measure the area occupied in a binary image, or in objects?:Objects
+    Select objects to measure:Cells
+    Retain a binary image of the object regions?:No
+    Name the output binary image:Stain
+    Select a binary image to measure:None
+    Measure the area occupied in a binary image, or in objects?:Objects
+    Select objects to measure:Cells_Actin
+    Retain a binary image of the object regions?:No
+    Name the output binary image:Stain
+    Select a binary image to measure:None
+    Measure the area occupied in a binary image, or in objects?:Objects
+    Select objects to measure:Cells_Tubuline
+    Retain a binary image of the object regions?:No
+    Name the output binary image:Stain
+    Select a binary image to measure:None
+
+MeasureTexture:[module_num:16|svn_version:\'Unknown\'|variable_revision_number:3|show_window:True|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Hidden:2
+    Hidden:2
+    Hidden:1
+    Select an image to measure:Actin
+    Select an image to measure:Tubulin
+    Select objects to measure:Cells_Actin
+    Select objects to measure:Cells_Tubuline
+    Texture scale to measure:3
+    Angles to measure:Horizontal,Vertical,Diagonal,Anti-diagonal
+    Measure Gabor features?:Yes
+    Number of angles to compute for Gabor:4
+
+MeasureGranularity:[module_num:17|svn_version:\'Unknown\'|variable_revision_number:3|show_window:True|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:False]
+    Image count:2
+    Object count:1
+    Select an image to measure:Actin
+    Subsampling factor for granularity measurements:0.25
+    Subsampling factor for background reduction:0.25
+    Radius of structuring element:10
+    Range of the granular spectrum:16
+    Select objects to measure:Cells_Actin
+    Object count:1
+    Select an image to measure:Tubulin
+    Subsampling factor for granularity measurements:0.25
+    Subsampling factor for background reduction:0.25
+    Radius of structuring element:10
+    Range of the granular spectrum:16
+    Select objects to measure:Cells_Tubuline
+
+ExportToSpreadsheet:[module_num:18|svn_version:\'Unknown\'|variable_revision_number:11|show_window:True|notes:\x5B\x5D|batch_state:array(\x5B\x5D, dtype=uint8)|enabled:True|wants_pause:True]
+    Select the column delimiter:Comma (",")
+    Add image metadata columns to your object data file?:Yes
+    Limit output to a size that is allowed in Excel?:No
+    Select the measurements to export:No
+    Calculate the per-image mean values for object measurements?:Yes
+    Calculate the per-image median values for object measurements?:Yes
+    Calculate the per-image standard deviation values for object measurements?:Yes
+    Output file location:Default Output Folder\x7C
+    Create a GenePattern GCT file?:No
+    Select source of sample row name:Metadata
+    Select the image to use as the identifier:None
+    Select the metadata to use as the identifier:None
+    Export all measurement types?:No
+    Press button to select measurements to export:MyoHC_MaskedNuclei_PipelineDev\x7CMath_AssayDev_MyoHC_PosNuclei,MyoHC_MaskedNuclei_PipelineDev\x7CLocation_Center_Y,MyoHC_MaskedNuclei_PipelineDev\x7CLocation_Center_X,MyoHC_MaskedNuclei_PipelineDev\x7CParent_Cells,MyoHC_MaskedNuclei_PipelineDev\x7CNumber_Object_Number,MyoHC_Area\x7CNumber_Object_Number,MyoHC_Area\x7CIntensity_StdIntensityEdge_Nuclei,MyoHC_Area\x7CIntensity_StdIntensityEdge_MyoHC,MyoHC_Area\x7CIntensity_StdIntensityEdge_adGFP,MyoHC_Area\x7CIntensity_MinIntensity_Nuclei,MyoHC_Area\x7CIntensity_MinIntensity_MyoHC,MyoHC_Area\x7CIntensity_MinIntensity_adGFP,MyoHC_Area\x7CIntensity_StdIntensity_Nuclei,MyoHC_Area\x7CIntensity_StdIntensity_MyoHC,MyoHC_Area\x7CIntensity_StdIntensity_adGFP,MyoHC_Area\x7CIntensity_IntegratedIntensityEdge_Nuclei,MyoHC_Area\x7CIntensity_IntegratedIntensityEdge_MyoHC,MyoHC_Area\x7CIntensity_IntegratedIntensityEdge_adGFP,MyoHC_Area\x7CIntensity_MassDisplacement_Nuclei,MyoHC_Area\x7CIntensity_MassDisplacement_MyoHC,MyoHC_Area\x7CIntensity_MassDisplacement_adGFP,MyoHC_Area\x7CIntensity_UpperQuartileIntensity_Nuclei,MyoHC_Area\x7CIntensity_UpperQuartileIntensity_MyoHC,MyoHC_Area\x7CIntensity_UpperQuartileIntensity_adGFP,MyoHC_Area\x7CIntensity_MinIntensityEdge_Nuclei,MyoHC_Area\x7CIntensity_MinIntensityEdge_MyoHC,MyoHC_Area\x7CIntensity_MinIntensityEdge_adGFP,MyoHC_Area\x7CIntensity_MADIntensity_Nuclei,MyoHC_Area\x7CIntensity_MADIntensity_MyoHC,MyoHC_Area\x7CIntensity_MADIntensity_adGFP,MyoHC_Area\x7CIntensity_IntegratedIntensity_Nuclei,MyoHC_Area\x7CIntensity_IntegratedIntensity_MyoHC,MyoHC_Area\x7CIntensity_IntegratedIntensity_adGFP,MyoHC_Area\x7CIntensity_MeanIntensityEdge_Nuclei,MyoHC_Area\x7CIntensity_MeanIntensityEdge_MyoHC,MyoHC_Area\x7CIntensity_MeanIntensityEdge_adGFP,MyoHC_Area\x7CIntensity_MaxIntensity_Nuclei,MyoHC_Area\x7CIntensity_MaxIntensity_MyoHC,MyoHC_Area\x7CIntensity_MaxIntensity_adGFP,MyoHC_Area\x7CIntensity_MedianIntensity_Nuclei,MyoHC_Area\x7CIntensity_MedianIntensity_MyoHC,MyoHC_Area\x7CIntensity_MedianIntensity_adGFP,MyoHC_Area\x7CIntensity_MeanIntensity_Nuclei,MyoHC_Area\x7CIntensity_MeanIntensity_MyoHC,MyoHC_Area\x7CIntensity_MeanIntensity_adGFP,MyoHC_Area\x7CIntensity_LowerQuartileIntensity_Nuclei,MyoHC_Area\x7CIntensity_LowerQuartileIntensity_MyoHC,MyoHC_Area\x7CIntensity_LowerQuartileIntensity_adGFP,MyoHC_Area\x7CIntensity_MaxIntensityEdge_Nuclei,MyoHC_Area\x7CIntensity_MaxIntensityEdge_MyoHC,MyoHC_Area\x7CIntensity_MaxIntensityEdge_adGFP,MyoHC_Area\x7CLocation_MaxIntensity_Y_Nuclei,MyoHC_Area\x7CLocation_MaxIntensity_Y_MyoHC,MyoHC_Area\x7CLocation_MaxIntensity_Y_adGFP,MyoHC_Area\x7CLocation_MaxIntensity_X_Nuclei,MyoHC_Area\x7CLocation_MaxIntensity_X_MyoHC,MyoHC_Area\x7CLocation_MaxIntensity_X_adGFP,MyoHC_Area\x7CLocation_Center_Y,MyoHC_Area\x7CLocation_Center_X,MyoHC_Area\x7CLocation_CenterMassIntensity_Y_Nuclei,MyoHC_Area\x7CLocation_CenterMassIntensity_Y_MyoHC,MyoHC_Area\x7CLocation_CenterMassIntensity_Y_adGFP,MyoHC_Area\x7CLocation_CenterMassIntensity_X_Nuclei,MyoHC_Area\x7CLocation_CenterMassIntensity_X_MyoHC,MyoHC_Area\x7CLocation_CenterMassIntensity_X_adGFP,MyoHC_Area\x7CAreaShape_Perimeter,MyoHC_Area\x7CAreaShape_FormFactor,MyoHC_Area\x7CAreaShape_Solidity,MyoHC_Area\x7CAreaShape_Center_Y,MyoHC_Area\x7CAreaShape_Center_X,MyoHC_Area\x7CAreaShape_MajorAxisLength,MyoHC_Area\x7CAreaShape_MinFeretDiameter,MyoHC_Area\x7CAreaShape_Area,MyoHC_Area\x7CAreaShape_MaxFeretDiameter,MyoHC_Area\x7CAreaShape_EulerNumber,MyoHC_Area\x7CAreaShape_MedianRadius,MyoHC_Area\x7CAreaShape_Compactness,MyoHC_Area\x7CAreaShape_Extent,MyoHC_Area\x7CAreaShape_Orientation,MyoHC_Area\x7CAreaShape_Eccentricity,MyoHC_Area\x7CAreaShape_MaximumRadius,MyoHC_Area\x7CAreaShape_MinorAxisLength,MyoHC_Area\x7CAreaShape_MeanRadius,MyoHC_Area\x7CChildren_GFP_Masked_MyoHC_Count,GFP_Area\x7CIntensity_MassDisplacement_Nuclei,GFP_Area\x7CIntensity_MassDisplacement_adGFP,GFP_Area\x7CIntensity_MinIntensity_Nuclei,GFP_Area\x7CIntensity_MinIntensity_adGFP,GFP_Area\x7CIntensity_StdIntensity_Nuclei,GFP_Area\x7CIntensity_StdIntensity_adGFP,GFP_Area\x7CIntensity_IntegratedIntensityEdge_Nuclei,GFP_Area\x7CIntensity_IntegratedIntensityEdge_adGFP,GFP_Area\x7CIntensity_UpperQuartileIntensity_Nuclei,GFP_Area\x7CIntensity_UpperQuartileIntensity_adGFP,GFP_Area\x7CIntensity_IntegratedIntensity_Nuclei,GFP_Area\x7CIntensity_IntegratedIntensity_adGFP,GFP_Area\x7CIntensity_MinIntensityEdge_Nuclei,GFP_Area\x7CIntensity_MinIntensityEdge_adGFP,GFP_Area\x7CIntensity_MADIntensity_Nuclei,GFP_Area\x7CIntensity_MADIntensity_adGFP,GFP_Area\x7CIntensity_MeanIntensity_Nuclei,GFP_Area\x7CIntensity_MeanIntensity_adGFP,GFP_Area\x7CIntensity_MeanIntensityEdge_Nuclei,GFP_Area\x7CIntensity_MeanIntensityEdge_adGFP,GFP_Area\x7CIntensity_MaxIntensity_Nuclei,GFP_Area\x7CIntensity_MaxIntensity_adGFP,GFP_Area\x7CIntensity_MedianIntensity_Nuclei,GFP_Area\x7CIntensity_MedianIntensity_adGFP,GFP_Area\x7CIntensity_LowerQuartileIntensity_Nuclei,GFP_Area\x7CIntensity_LowerQuartileIntensity_adGFP,GFP_Area\x7CIntensity_MaxIntensityEdge_Nuclei,GFP_Area\x7CIntensity_MaxIntensityEdge_adGFP,GFP_Area\x7CIntensity_StdIntensityEdge_Nuclei,GFP_Area\x7CIntensity_StdIntensityEdge_adGFP,GFP_Area\x7CNumber_Object_Number,GFP_Area\x7CLocation_MaxIntensity_Y_Nuclei,GFP_Area\x7CLocation_MaxIntensity_Y_adGFP,GFP_Area\x7CLocation_MaxIntensity_X_Nuclei,GFP_Area\x7CLocation_MaxIntensity_X_adGFP,GFP_Area\x7CLocation_CenterMassIntensity_Y_Nuclei,GFP_Area\x7CLocation_CenterMassIntensity_Y_adGFP,GFP_Area\x7CLocation_CenterMassIntensity_X_Nuclei,GFP_Area\x7CLocation_CenterMassIntensity_X_adGFP,GFP_Area\x7CLocation_Center_Y,GFP_Area\x7CLocation_Center_X,GFP_Area\x7CAreaShape_Perimeter,GFP_Area\x7CAreaShape_FormFactor,GFP_Area\x7CAreaShape_Solidity,GFP_Area\x7CAreaShape_Center_Y,GFP_Area\x7CAreaShape_Center_X,GFP_Area\x7CAreaShape_MaxFeretDiameter,GFP_Area\x7CAreaShape_MinFeretDiameter,GFP_Area\x7CAreaShape_Area,GFP_Area\x7CAreaShape_MeanRadius,GFP_Area\x7CAreaShape_EulerNumber,GFP_Area\x7CAreaShape_MedianRadius,GFP_Area\x7CAreaShape_Compactness,GFP_Area\x7CAreaShape_Extent,GFP_Area\x7CAreaShape_Eccentricity,GFP_Area\x7CAreaShape_MaximumRadius,GFP_Area\x7CAreaShape_MinorAxisLength,GFP_Area\x7CAreaShape_MajorAxisLength,GFP_Area\x7CAreaShape_Orientation,GFP_Masked_Nuclei\x7CParent_Cells,GFP_Masked_Nuclei\x7CNumber_Object_Number,GFP_Masked_Nuclei\x7CMath_GFP_PosNuclei,GFP_Masked_Nuclei\x7CLocation_Center_Y,GFP_Masked_Nuclei\x7CLocation_Center_X,Image\x7CCount_MyoHC_MaskedNuclei_PipelineDev,Image\x7CCount_MyoHC_Area,Image\x7CCount_Cells,Image\x7CCount_Cells_NuclearClumps,Image\x7CCount_NuclearClumps,Image\x7CCount_Nuclei,Image\x7CCount_GFP_Masked_Nuclei,Image\x7CCount_GFP_Masked_MyoHC,Image\x7CCount_GFP_Area,Image\x7CAreaOccupied_TotalArea_Nuclei,Image\x7CAreaOccupied_TotalArea_MyoHC_Area,Image\x7CAreaOccupied_TotalArea_GFP_Area,Image\x7CAreaOccupied_AreaOccupied_GFP_Area,Image\x7CAreaOccupied_AreaOccupied_MyoHC_Area,Image\x7CAreaOccupied_AreaOccupied_Nuclei,Image\x7CURL_Nuclei,Image\x7CURL_MyoHC,Image\x7CURL_adGFP,Image\x7CIntensity_MinIntensity_MyoHC,Image\x7CIntensity_MinIntensity_MyoHC_GFP_Area,Image\x7CIntensity_MinIntensity_MyoHC_MyoHC_Area,Image\x7CIntensity_MinIntensity_adGFP,Image\x7CIntensity_MinIntensity_adGFP_GFP_Area,Image\x7CIntensity_MinIntensity_adGFP_MyoHC_Area,Image\x7CIntensity_StdIntensity_MyoHC,Image\x7CIntensity_StdIntensity_MyoHC_GFP_Area,Image\x7CIntensity_StdIntensity_MyoHC_MyoHC_Area,Image\x7CIntensity_StdIntensity_adGFP,Image\x7CIntensity_StdIntensity_adGFP_GFP_Area,Image\x7CIntensity_StdIntensity_adGFP_MyoHC_Area,Image\x7CIntensity_TotalIntensity_MyoHC,Image\x7CIntensity_TotalIntensity_MyoHC_GFP_Area,Image\x7CIntensity_TotalIntensity_MyoHC_MyoHC_Area,Image\x7CIntensity_TotalIntensity_adGFP,Image\x7CIntensity_TotalIntensity_adGFP_GFP_Area,Image\x7CIntensity_TotalIntensity_adGFP_MyoHC_Area,Image\x7CIntensity_PercentMaximal_MyoHC,Image\x7CIntensity_PercentMaximal_MyoHC_GFP_Area,Image\x7CIntensity_PercentMaximal_MyoHC_MyoHC_Area,Image\x7CIntensity_PercentMaximal_adGFP,Image\x7CIntensity_PercentMaximal_adGFP_GFP_Area,Image\x7CIntensity_PercentMaximal_adGFP_MyoHC_Area,Image\x7CIntensity_TotalArea_MyoHC,Image\x7CIntensity_TotalArea_MyoHC_GFP_Area,Image\x7CIntensity_TotalArea_MyoHC_MyoHC_Area,Image\x7CIntensity_TotalArea_adGFP,Image\x7CIntensity_TotalArea_adGFP_GFP_Area,Image\x7CIntensity_TotalArea_adGFP_MyoHC_Area,Image\x7CIntensity_MADIntensity_MyoHC,Image\x7CIntensity_MADIntensity_MyoHC_GFP_Area,Image\x7CIntensity_MADIntensity_MyoHC_MyoHC_Area,Image\x7CIntensity_MADIntensity_adGFP,Image\x7CIntensity_MADIntensity_adGFP_GFP_Area,Image\x7CIntensity_MADIntensity_adGFP_MyoHC_Area,Image\x7CIntensity_MeanIntensity_MyoHC,Image\x7CIntensity_MeanIntensity_MyoHC_GFP_Area,Image\x7CIntensity_MeanIntensity_MyoHC_MyoHC_Area,Image\x7CIntensity_MeanIntensity_adGFP,Image\x7CIntensity_MeanIntensity_adGFP_GFP_Area,Image\x7CIntensity_MeanIntensity_adGFP_MyoHC_Area,Image\x7CIntensity_UpperQuartileIntensity_MyoHC,Image\x7CIntensity_UpperQuartileIntensity_MyoHC_GFP_Area,Image\x7CIntensity_UpperQuartileIntensity_MyoHC_MyoHC_Area,Image\x7CIntensity_UpperQuartileIntensity_adGFP,Image\x7CIntensity_UpperQuartileIntensity_adGFP_GFP_Area,Image\x7CIntensity_UpperQuartileIntensity_adGFP_MyoHC_Area,Image\x7CIntensity_MaxIntensity_MyoHC,Image\x7CIntensity_MaxIntensity_MyoHC_GFP_Area,Image\x7CIntensity_MaxIntensity_MyoHC_MyoHC_Area,Image\x7CIntensity_MaxIntensity_adGFP,Image\x7CIntensity_MaxIntensity_adGFP_GFP_Area,Image\x7CIntensity_MaxIntensity_adGFP_MyoHC_Area,Image\x7CIntensity_MedianIntensity_MyoHC,Image\x7CIntensity_MedianIntensity_MyoHC_GFP_Area,Image\x7CIntensity_MedianIntensity_MyoHC_MyoHC_Area,Image\x7CIntensity_MedianIntensity_adGFP,Image\x7CIntensity_MedianIntensity_adGFP_GFP_Area,Image\x7CIntensity_MedianIntensity_adGFP_MyoHC_Area,Image\x7CIntensity_LowerQuartileIntensity_MyoHC,Image\x7CIntensity_LowerQuartileIntensity_MyoHC_GFP_Area,Image\x7CIntensity_LowerQuartileIntensity_MyoHC_MyoHC_Area,Image\x7CIntensity_LowerQuartileIntensity_adGFP,Image\x7CIntensity_LowerQuartileIntensity_adGFP_GFP_Area,Image\x7CIntensity_LowerQuartileIntensity_adGFP_MyoHC_Area,Image\x7CPathName_Nuclei,Image\x7CPathName_MyoHC,Image\x7CPathName_adGFP,Image\x7CMetadata_Column,Image\x7CMetadata_Barcode,Image\x7CMetadata_CreationTime,Image\x7CMetadata_RowNumber,Image\x7CMetadata_FieldIndex,Image\x7CMetadata_ImagingComputer,Image\x7CMetadata_CreationDate,Image\x7CMetadata_PlateSize,NuclearClumps\x7CNumber_Object_Number,NuclearClumps\x7CChildren_Cells_NuclearClumps_Count,NuclearClumps\x7CLocation_Center_Y,NuclearClumps\x7CLocation_Center_X,Cells_NuclearClumps\x7CIntensity_MassDisplacement_MyoHC,Cells_NuclearClumps\x7CIntensity_MassDisplacement_adGFP,Cells_NuclearClumps\x7CIntensity_MinIntensity_MyoHC,Cells_NuclearClumps\x7CIntensity_MinIntensity_adGFP,Cells_NuclearClumps\x7CIntensity_StdIntensity_MyoHC,Cells_NuclearClumps\x7CIntensity_StdIntensity_adGFP,Cells_NuclearClumps\x7CIntensity_IntegratedIntensityEdge_MyoHC,Cells_NuclearClumps\x7CIntensity_IntegratedIntensityEdge_adGFP,Cells_NuclearClumps\x7CIntensity_MinIntensityEdge_MyoHC,Cells_NuclearClumps\x7CIntensity_MinIntensityEdge_adGFP,Cells_NuclearClumps\x7CIntensity_UpperQuartileIntensity_MyoHC,Cells_NuclearClumps\x7CIntensity_UpperQuartileIntensity_adGFP,Cells_NuclearClumps\x7CIntensity_MADIntensity_MyoHC,Cells_NuclearClumps\x7CIntensity_MADIntensity_adGFP,Cells_NuclearClumps\x7CIntensity_IntegratedIntensity_MyoHC,Cells_NuclearClumps\x7CIntensity_IntegratedIntensity_adGFP,Cells_NuclearClumps\x7CIntensity_MeanIntensityEdge_MyoHC,Cells_NuclearClumps\x7CIntensity_MeanIntensityEdge_adGFP,Cells_NuclearClumps\x7CIntensity_MaxIntensity_MyoHC,Cells_NuclearClumps\x7CIntensity_MaxIntensity_adGFP,Cells_NuclearClumps\x7CIntensity_MedianIntensity_MyoHC,Cells_NuclearClumps\x7CIntensity_MedianIntensity_adGFP,Cells_NuclearClumps\x7CIntensity_MeanIntensity_MyoHC,Cells_NuclearClumps\x7CIntensity_MeanIntensity_adGFP,Cells_NuclearClumps\x7CIntensity_LowerQuartileIntensity_MyoHC,Cells_NuclearClumps\x7CIntensity_LowerQuartileIntensity_adGFP,Cells_NuclearClumps\x7CIntensity_MaxIntensityEdge_MyoHC,Cells_NuclearClumps\x7CIntensity_MaxIntensityEdge_adGFP,Cells_NuclearClumps\x7CIntensity_StdIntensityEdge_MyoHC,Cells_NuclearClumps\x7CIntensity_StdIntensityEdge_adGFP,Cells_NuclearClumps\x7CLocation_MaxIntensity_Y_MyoHC,Cells_NuclearClumps\x7CLocation_MaxIntensity_Y_adGFP,Cells_NuclearClumps\x7CLocation_MaxIntensity_X_MyoHC,Cells_NuclearClumps\x7CLocation_MaxIntensity_X_adGFP,Cells_NuclearClumps\x7CLocation_Center_Y,Cells_NuclearClumps\x7CLocation_Center_X,Cells_NuclearClumps\x7CLocation_CenterMassIntensity_Y_MyoHC,Cells_NuclearClumps\x7CLocation_CenterMassIntensity_Y_adGFP,Cells_NuclearClumps\x7CLocation_CenterMassIntensity_X_MyoHC,Cells_NuclearClumps\x7CLocation_CenterMassIntensity_X_adGFP,Cells_NuclearClumps\x7CParent_NuclearClumps,Cells_NuclearClumps\x7CNumber_Object_Number,GFP_Masked_MyoHC\x7CParent_MyoHC_Area,GFP_Masked_MyoHC\x7CLocation_Center_Y,GFP_Masked_MyoHC\x7CLocation_Center_X,GFP_Masked_MyoHC\x7CMath_GFP_Pos_MyoHC,GFP_Masked_MyoHC\x7CNumber_Object_Number,Experiment\x7CModification_Timestamp,Experiment\x7CRun_Timestamp,Experiment\x7CPipeline_Pipeline,Experiment\x7CCellProfiler_Version,Nuclei\x7CNumber_Object_Number,Nuclei\x7CChildren_Cells_Count,Nuclei\x7CLocation_Center_Y,Nuclei\x7CLocation_Center_X,Cells\x7CParent_Nuclei,Cells\x7CNumber_Object_Number,Cells\x7CIntensity_MassDisplacement_MyoHC,Cells\x7CIntensity_MassDisplacement_adGFP,Cells\x7CIntensity_MinIntensity_MyoHC,Cells\x7CIntensity_MinIntensity_adGFP,Cells\x7CIntensity_IntegratedIntensityEdge_MyoHC,Cells\x7CIntensity_IntegratedIntensityEdge_adGFP,Cells\x7CIntensity_StdIntensity_MyoHC,Cells\x7CIntensity_StdIntensity_adGFP,Cells\x7CIntensity_UpperQuartileIntensity_MyoHC,Cells\x7CIntensity_UpperQuartileIntensity_adGFP,Cells\x7CIntensity_IntegratedIntensity_MyoHC,Cells\x7CIntensity_IntegratedIntensity_adGFP,Cells\x7CIntensity_MinIntensityEdge_MyoHC,Cells\x7CIntensity_MinIntensityEdge_adGFP,Cells\x7CIntensity_MADIntensity_MyoHC,Cells\x7CIntensity_MADIntensity_adGFP,Cells\x7CIntensity_MeanIntensity_MyoHC,Cells\x7CIntensity_MeanIntensity_adGFP,Cells\x7CIntensity_MeanIntensityEdge_MyoHC,Cells\x7CIntensity_MeanIntensityEdge_adGFP,Cells\x7CIntensity_LowerQuartileIntensity_MyoHC,Cells\x7CIntensity_LowerQuartileIntensity_adGFP,Cells\x7CIntensity_MaxIntensity_MyoHC,Cells\x7CIntensity_MaxIntensity_adGFP,Cells\x7CIntensity_MedianIntensity_MyoHC,Cells\x7CIntensity_MedianIntensity_adGFP,Cells\x7CIntensity_StdIntensityEdge_MyoHC,Cells\x7CIntensity_StdIntensityEdge_adGFP,Cells\x7CIntensity_MaxIntensityEdge_MyoHC,Cells\x7CIntensity_MaxIntensityEdge_adGFP,Cells\x7CLocation_MaxIntensity_Y_MyoHC,Cells\x7CLocation_MaxIntensity_Y_adGFP,Cells\x7CLocation_MaxIntensity_X_MyoHC,Cells\x7CLocation_MaxIntensity_X_adGFP,Cells\x7CLocation_Center_Y,Cells\x7CLocation_Center_X,Cells\x7CLocation_CenterMassIntensity_Y_MyoHC,Cells\x7CLocation_CenterMassIntensity_Y_adGFP,Cells\x7CLocation_CenterMassIntensity_X_MyoHC,Cells\x7CLocation_CenterMassIntensity_X_adGFP,Cells\x7CChildren_GFP_Masked_Nuclei_Count,Cells\x7CChildren_MyoHC_MaskedNuclei_PipelineDev_Count,Cells\x7CMath_WholeCellMeanIntensity,HighIntensity_GFP_Objects\x7CNumber_Object_Number
+    Representation of Nan/Inf:NaN
+    Add a prefix to file names?:No
+    Filename prefix\x3A:MyExpt_
+    Overwrite without warning?:Yes
+    Data to export:Image
+    Combine these object measurements with those of the previous object?:No
+    File name:\\\\g<Plate_DAPI>_\\\\g<Well_DAPI>_\\\\g<Compound>.csv
+    Use the object name for the file name?:No

@@ -1,9 +1,28 @@
+#' Return column names matching a prefix
+#'
+#' Useful for returning names of metadata or feature data columns in a given
+#' dataframe or database table
+#'
+#' @param x dataframe o database table
+#' @param prefix string, prefix of columns
+#'
+#' @examples
+#' data(iris)
+#' # get the column names  in iris beginning with "S"
+#' get_cols(iris, prefix = "S")
+#' @export
+
+get_cols <- function(x, prefix) {
+    colnames(x)[grep(sprintf("^%s", prefix), colnames(x))]
+}
+
+
 #' aggregate data from single cell measurements
 #' 
 #' This functionn aggregates single cell level data to a user-specified level,
 #' typically to an image or well median for each feature.
 #' 
-#' @param data dataframe or sqlite table
+#' @param data dataframe or sql table
 #' @param grouping.column string, name of column with which to group by
 #' @param feature.columns strings, names of featuredata columns
 #' @param meta.columns strings, names of metadata columns
@@ -11,7 +30,9 @@
 #' 
 #' @import dplyr
 #' 
-#' @examples 
+#' @examples
+#' # add example
+#' # ideally need some example dataset
 #' 
 #' @export
 
@@ -27,7 +48,7 @@ aggregate_data <- function(data, grouping.column, feature.columns, meta.columns,
     # collapses specified metadata to the same level as feature data
     meta.data <- data %>%
 	select(one_of(meta.columns)) %>%
-	    unique()
+	unique()
     
     # merge featuredata and metadata by the grouping column
     # if performed on a database will collect queries, if performed on a

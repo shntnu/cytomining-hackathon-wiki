@@ -32,7 +32,13 @@ dat_1 <- dat %>%
   dplyr::bind_rows() 
 
 
-######################## TSNE ########################
+
+######################## For Per cell File ########################
+
+########################        PCA        ########################
+pca <- princomp(dat_1[, 1:(ncol(dat_1) -1)])
+
+########################        TSNE       ########################
 colors = rainbow(length(unique(dat_1$Metadata_Compound)))
 names(colors) = unique(dat_1$Metadata_Compound)
 
@@ -41,6 +47,11 @@ ecb = function(x,y){ plot(x,t='n'); text(x,labels=dat_1$Metadata_Compound, col=c
 # tsne_dat <- tsne::tsne(dat_1[, 1:(ncol(dat_1) -1)], epoch_callback = ecb, perplexity=2, max_iter = 10)
 
 
+
+######################## For Per Well File ########################
+
+########################          HC       ########################
+hc <- hclust(dist(dat_1[, 1:(ncol(dat_1) -1)]))
 
 ```
 

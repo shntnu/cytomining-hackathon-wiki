@@ -31,8 +31,8 @@ dat <- list(aur1 = read.delim(input_raw$aur1, header = TRUE, sep = "\t", check.n
 dat_1 <- dat %>%
   dplyr::bind_rows() 
 
-
-
+# remove any na if they exist in the data. (Which they dont)
+dat_1 %<>% na.omit()
 ######################## For Per cell File ########################
 
 ########################        PCA        ########################
@@ -55,5 +55,4 @@ hc <- hclust(dist(dat_1[, 1:(ncol(dat_1) -1)]))
 
 ```
 
-tsne_output <- tsne::tsne(dat_1[, 1:(ncol(dat_1) -1)], initial_config = NULL, k = 2, initial_dims = 30, perplexity = 30, max_iter = 1000, min_cost = 0, epoch_callback = NULL, whiten = TRUE, epoch=100)
 

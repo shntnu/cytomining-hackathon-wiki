@@ -12,6 +12,8 @@ output: html_document
 library(magrittr)
 library(dplyr)
 library(tsne)
+library(devtools)
+install_github("vqv/ggbiplot")
 library(ggbiplot)
 
 input_raw <- list(aur1 = "input/Aur-AZ258-1_000000.txt", 
@@ -23,17 +25,17 @@ input_raw <- list(aur1 = "input/Aur-AZ258-1_000000.txt",
 
 ######################## Data Read ########################
 dat <- list(aur1 = read.delim(input_raw$aur1, header = TRUE, sep = "\t", check.names = FALSE) %>%  as.data.frame() %>%
-              dplyr::mutate(Metadata_Compound = "aur1"), 
+              dplyr::mutate(Metadata_Compound = "1"), 
             aur2 = read.delim(input_raw$aur2, header = TRUE, sep = "\t", check.names = FALSE) %>%  as.data.frame() %>%
-              dplyr::mutate(Metadata_Compound = "aur2"),
+              dplyr::mutate(Metadata_Compound = "1"),
             aur3 = read.delim(input_raw$aur3, header = TRUE, sep = "\t", check.names = FALSE) %>%  as.data.frame() %>%
-              dplyr::mutate(Metadata_Compound = "aur3"),
+              dplyr::mutate(Metadata_Compound = "1"),
             ki1 = read.delim(input_raw$ki1, header = TRUE, sep = "\t", check.names = FALSE) %>%  as.data.frame() %>%
-              dplyr::mutate(Metadata_Compound = "ki1"), 
+              dplyr::mutate(Metadata_Compound = "2"), 
             ki2 = read.delim(input_raw$ki1, header = TRUE, sep = "\t", check.names = FALSE) %>%  as.data.frame() %>%
-              dplyr::mutate(Metadata_Compound = "ki1"),
+              dplyr::mutate(Metadata_Compound = "2"),
             ki3 = read.delim(input_raw$ki1, header = TRUE, sep = "\t", check.names = FALSE) %>%  as.data.frame() %>%
-              dplyr::mutate(Metadata_Compound = "ki1"))
+              dplyr::mutate(Metadata_Compound = "2"))
 
 # h <- dat[[2]]
 dat_1 <- dat %>%
@@ -54,8 +56,10 @@ pca$rotation
 screeplot(pca)
 
 g <- ggbiplot(pca, obs.scale = 1, var.scale = 1, 
-              groups = input_data.groundtruth, ellipse = TRUE, 
-              circle = TRUE)
+              #groups = input_data.groundtruth, 
+              ellipse = TRUE, 
+              circle = TRUE,
+              alpha = 0.1)
 g <- g + scale_color_discrete(name = '')
 g <- g + theme(legend.direction = 'horizontal', 
                legend.position = 'top')

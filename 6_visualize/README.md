@@ -13,7 +13,7 @@ Data input: cells vs. features matrix for each sample
 
 Typical data size for a mid-sized primary compound screen: 1000 cells with 20-30 selected features, 10,000 compounds. Makes 10^7 x 30 data points
 
-Preprocessing for data visualization 
+Preprocessing for data visualization:
 
 1. Pooling / concentration (optional: downsample the data if the total number of cells is too large)
 

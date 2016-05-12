@@ -6,6 +6,9 @@ output: html_document
 
 ```{r Load libraries_data, eval = TRUE}
 library(magrittr)
+library(dplyr)
+library(tsne)
+
 input_raw <- list(aur1 = "input/Aur-AZ258-1_000000.txt", 
                   aur2 = "input/Aur-AZ841-1_000000.txt",
                   aur3 = "input/Aur-AZ-A-1_000000.txt",
@@ -36,8 +39,9 @@ dat_1 %<>% na.omit()
 ######################## For Per cell File ########################
 
 ########################        PCA        ########################
-pca <- princomp(dat_1[, 1:(ncol(dat_1) -1)])
-
+pca <- prcomp(dat_1[, 1:(ncol(dat_1) -1)])
+plot(pca)
+biplot(pca)
 ########################        TSNE       ########################
 colors = rainbow(length(unique(dat_1$Metadata_Compound)))
 names(colors) = unique(dat_1$Metadata_Compound)
@@ -51,6 +55,7 @@ ecb = function(x,y){ plot(x,t='n'); text(x,labels=dat_1$Metadata_Compound, col=c
 ######################## For Per Well File ########################
 
 ########################          HC       ########################
+per_cell <- readr::read_csv("input/az_per_well.csv")
 hc <- hclust(dist(dat_1[, 1:(ncol(dat_1) -1)]))
 
 ```

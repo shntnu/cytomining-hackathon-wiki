@@ -48,13 +48,13 @@ dat_1 %<>% na.omit()
 
 ########################        PCA        ########################
 pca <- prcomp(dat_1[, 1:(ncol(dat_1) -1)])
-plot(pca)
+#plot(pca)
+screeplot(pca)
 biplot(pca)
 
 summary(pca)
-pca$sdev
-pca$rotation
-screeplot(pca)
+#pca$sdev
+#pca$rotation
 
 g <- ggbiplot(pca, obs.scale = 1, var.scale = 1, 
               #groups = input_data.groundtruth, 

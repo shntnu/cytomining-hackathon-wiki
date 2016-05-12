@@ -1,0 +1,21 @@
+df <- collect(data)
+dim(df)
+
+# subset to a smaller table for easier computation#
+unique(df$Image_Metadata_Plate_DAPI)
+dfs <- filter(df, grepl("Week[1|2]_", Image_Metadata_Plate_DAPI))
+dim(dfs)
+
+feat <- grep("Nuclei_|Cells_|Cytoplasm_", colnames(dfs), value=TRUE)
+nFeat <- length(feat)
+
+library(ggplot2)
+
+
+favFeat <- c("Nuclei_AreaShape_Area", 
+             "Cells_Neighbors_NumberOfNeighbors_10",
+             "Cells_Intensity_MeanIntensity_CorrActin",
+             "Nuclei_Texture_SumEntropy_CorrDAPI_10")
+
+library(tidyr)
+dfl <- dfs[, favFeat]

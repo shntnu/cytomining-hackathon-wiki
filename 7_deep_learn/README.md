@@ -16,3 +16,9 @@ The `load.py` module facilitates loading up minibatches of the data, based on a 
 is available here as `metadata.csv`.
 
 This is by no means definitive, but rather an early prototype to test various DL methods on microscopy data.
+
+There is also an AMI publicly available that already has this dataset, the CUDA installation complete, as well as the
+necessary python dependencies: `ami-cafd01aa`
+
+Launching a GPU EC2 instance from that image should make it nearly trivial to get started with deep learning on this
+morphological profiling task.

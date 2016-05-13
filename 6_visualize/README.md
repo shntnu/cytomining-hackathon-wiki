@@ -10,7 +10,7 @@
 
 Visualization, clustering and classification analysis is typically performed after normalization and feature selection of single-cell level data. 
 
-Data input: cells vs. features matrix for each sample
+Data input: cells vs. features matrix for each sample, stored in CSV files or tab-delimit txt files. Standardized file names would be preferred. 
 
 Typical data size for a mid-sized primary compound screen: 1000 cells with 20-30 selected features, 10,000 compounds. Makes 10^7 x 30 data points
 

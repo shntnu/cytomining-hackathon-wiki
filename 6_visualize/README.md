@@ -16,9 +16,9 @@ Typical data size for a mid-sized primary compound screen: 1000 cells with 20-30
 
 Preprocessing for data visualization:
 
-1. Pooling / concentration (optional: downsample the data if the total number of cells is too large)
+1. Pooling / concentration (optional: downsample the data if the total number of cells is too large).  Output of this step is basically one tall thin data matrix, with many many rows corresponding to cells across all samples, and relatively small number of columns corresponding to the features. 
 
-2. Visualization of single cells (PCA, tSNE, SPADE), and color code the visualization based on individual samples.
+2. Visualization of single cells (PCA, tSNE, SPADE). Input and color code the visualization based on individual samples.
 
 3. Distance metric based on SPADE distribution (L2, Corr, EMD)
 

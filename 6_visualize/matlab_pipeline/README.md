@@ -36,15 +36,19 @@ Similar as before, the SPADE visualizaiton can be used as the backgroud landscap
 <img src="https://cloud.githubusercontent.com/assets/18299367/15306765/703bbc76-1b9b-11e6-8d06-b1164693855d.png" width="1000"> 
 
 
-#####Heatmap and MST based on SPADE distributions and Correlation distance
+#####Heatmap and MST based on SPADE and Correlation distance
 The SPADE visualization of individual samples can be viewed as probability distributions. For each sample, the node colors form a probability distribution of cells on the SPADE tree nodes. Given 103 distributions for the 103 samples in this dataset, we can derive a pairwise sample-to-sample distance metric to visualize the similarity and differences among the samples. 
-Pairwise correlation distance is computed and visualizaed by hierarchial clustering heatmap. The colorbar below the heatmap 
+Pairwise correlation distance is computed and visualizaed by hierarchial clustering heatmap. The colorbar below the heatmap visualizes the MOAs of the 103 samples, and shows that samples within some MOAs are clustered together.  An alternative is to build a minimum spanning tree (MST) based on the pairwise correlation distance, and visualize the MST in a SPADE-like fashion. Here, each node is one sample and the MST reflects which samples are similar/close to each other according to the pairwise distances. To assist visual interpretation, MOA of each node/sample is used to color and index the node. From the MST, we can see that samples with the same MOA are grouped toghether.  
 <img src="https://cloud.githubusercontent.com/assets/18299367/15306766/73ad5aae-1b9b-11e6-883f-658dea425f56.png" width="1200"> 
 
 
-visualization. (2.2) We can color the visualization by distribution of cells in a particular sample. The resulting colored visualization tell us which part of the visualization is occupied by cells in the sample, or in other words, what morphologies are present in the sample with what probability.
+#####Heatmap and MST based on SPADE and EMD
+As mentioned above, the SPADE visualization of individual samples can be viewed as probability distributions. The Earth Mover's Distance (EMD) is a distance measure between probability distributions that can take additional structure into consideration, which is the SPADE tree in this context. The pairwise EMD of the 103 samples is computed and visualized in the heatmap below. According to the heatmap and colorbar below it, EMD appears less effective in clustering the MOAs. 
 
-Sample distance matrix based on SPADE. The SPADE tree and visualization (2.2) gives us a cell distribution on the visualization for each sample. After obtain the cell distributions of the samples, we can compute pairwise distance of distributions of each pair of samples. The distance metric can be Euclidean, Correlation Distance, or Earth Mover's Distance which takes the SPADE tree structure into consideration.
+However, according to the MST visualization of the pairwise EMD matrix, the two distance metrics (Corr and EMD) show similar performance. This is an example showing that the MST visualization provides a useful alternative to clustering heatmap. 
+<img src="https://cloud.githubusercontent.com/assets/18299367/15306769/7748fcc2-1b9b-11e6-9ea4-46b113be3b30.png" width="1200"> 
 
-Visualization of sample similarities. The sample distance matrix can be visualized by heatmap and hierarchical clustering, to reveal clustering pattern of the samples. Alternatively, the distance matrix can be visualized by Minimum Spanning Tree, leading to a SPADE-like visualizatioin where we can observe both clustering pattern of the samples and similarity among the clusters.
 
+#####Compare Corr and EMD
+As a direct comparison of the pairwise correlation distance matrix and the pairwise EMD matrix, a scatter plot between the two is shown below. 
+<img src="https://cloud.githubusercontent.com/assets/18299367/15306771/7a64d07a-1b9b-11e6-8ddf-8074fedbf07a.png" width="500"> 

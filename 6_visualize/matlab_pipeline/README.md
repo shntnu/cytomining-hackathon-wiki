@@ -30,10 +30,10 @@ However, the tSNE visualization is helpful in separating sampels with different 
 
 #####SPADE visualization of single cells 
 SPADE can also be applied to visualize the single-cell data. SPADE views the 29-dimensional "union" sample as a 29-dimensional point cloud, and aims to derive a tree representation to approximate the skeleton of the point cloud. In the SPADE tree, each node is a cluster of cells, and the edges form a minimun spanning tree to connect the clusters. If we color the tree according to the 29 features one at a time, we will observe that different parts/branches of tree correspond to different morphological phenotype of cells (not shown here). The structure of the tree is shown below. 
-<img src="https://cloud.githubusercontent.com/assets/18299367/15306762/6ca63f5a-1b9b-11e6-87f7-5e3b5c774668.png" width="600"> 
+<img src="https://cloud.githubusercontent.com/assets/18299367/15309058/430dca1c-1bb1-11e6-825e-a7d7d094a7e5.png" width="600"> 
 
 Similar as before, the SPADE visualizaiton can be used as the backgroud landscape to visualize individual samples. In each of the 6 sub-figures below, one sample is visualized, and nodes are colored by the precentage/frequence of cells in the sample belong to each node. Basically, each sub-figure shows which part of the SPADE tree is occupied by cells in a particular sample. Again, we can clearly observed that the 6 samples form two groups (MOAs). 
-<img src="https://cloud.githubusercontent.com/assets/18299367/15309058/430dca1c-1bb1-11e6-825e-a7d7d094a7e5.png" width="1000"> 
+<img src="https://cloud.githubusercontent.com/assets/18299367/15306765/703bbc76-1b9b-11e6-8d06-b1164693855d.png" width="1000"> 
 
 
 

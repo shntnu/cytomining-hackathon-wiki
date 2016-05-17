@@ -36,8 +36,13 @@ Similar as before, the SPADE visualizaiton can be used as the backgroud landscap
 <img src="https://cloud.githubusercontent.com/assets/18299367/15306765/703bbc76-1b9b-11e6-8d06-b1164693855d.png" width="1000"> 
 
 
+#####Heatmap and MST based on SPADE distributions and Correlation distance
+The SPADE visualization of individual samples can be viewed as probability distributions. For each sample, the node colors form a probability distribution of cells on the SPADE tree nodes. Given 103 distributions for the 103 samples in this dataset, we can derive a pairwise sample-to-sample distance metric to visualize the similarity and differences among the samples. 
+Pairwise correlation distance is computed and visualizaed by hierarchial clustering heatmap. The colorbar below the heatmap 
+<img src="https://cloud.githubusercontent.com/assets/18299367/15306766/73ad5aae-1b9b-11e6-883f-658dea425f56.png" width="1200"> 
 
-Below is Input of this step is the pooled data matrix. The output is a visualization (map) that visualizes either the data points/cells (PCA and tSNE), or a tree representation of the structure/skeleton of the data (SPADE). (2.1) We can color the visualization by a particular marker. The resulting colored visualization tell us which part of the visualization is high for the marker, which part is low for the marker. Doing this for all the markers one-by-one will show us which part of the visualization is positive for what features, and help us to understand the morphologies corresponding to various parts of the visualization. (2.2) We can color the visualization by distribution of cells in a particular sample. The resulting colored visualization tell us which part of the visualization is occupied by cells in the sample, or in other words, what morphologies are present in the sample with what probability.
+
+visualization. (2.2) We can color the visualization by distribution of cells in a particular sample. The resulting colored visualization tell us which part of the visualization is occupied by cells in the sample, or in other words, what morphologies are present in the sample with what probability.
 
 Sample distance matrix based on SPADE. The SPADE tree and visualization (2.2) gives us a cell distribution on the visualization for each sample. After obtain the cell distributions of the samples, we can compute pairwise distance of distributions of each pair of samples. The distance metric can be Euclidean, Correlation Distance, or Earth Mover's Distance which takes the SPADE tree structure into consideration.
 

@@ -13,11 +13,19 @@ DMSO-normalized variance-feature-extracted single-cell data for 103 samples. Dat
 Read data for each sample. Pool them together to form a "union" sample that contain all cells from all samples. (Optional: if the total number of cells is too large, we can downsample the data to reduce the number of cells, but we also need to upsample in all subsequent visualizations. How to upsample will be different for each visualization algorithm. Examples are not provided here.)
 
 #####PCA visualization of single cells 
-Take the "union" sample and perform PCA to reduce this 29-dimensional dataset to 2D. The resulting 2D data can be visualized by the scatter plot and contour plot below. The two axes correspond to the two principle components. In the scatter plot, each dot represents one cell. The contour plot shows the density of cells in this 2D visualization. 
-<img src="https://cloud.githubusercontent.com/assets/18299367/15306752/5e8fbaae-1b9b-11e6-8e1a-f8e4a1aa8283.png" width="600" height="300">
+Take the "union" sample and perform PCA to reduce this 29-dimensional dataset to 2D. The resulting 2D data can be visualized by the scatter plot and contour plot below. The two axes correspond to the two principle components. In the scatter plot, each dot represents one cell. The contour plot shows the density of cells in this 2D visualization.
+<img src="https://cloud.githubusercontent.com/assets/18299367/15306752/5e8fbaae-1b9b-11e6-8e1a-f8e4a1aa8283.png" width="700" height="300">
 
-The PCA visualization of the "union" sample can be used as a background landscape to visualize each individual sample. Below shows 6 selected samples out of the total of 103 samples. These 6 samples belong two MOAs. The first three are Aurora Kinase inhibitors (Aur), and the last three are labeled as general Kinase inhibitors (Ki). We can see the similarities 
+The PCA visualization of the "union" sample can be used as a background landscape to visualize each individual sample. Below shows 6 selected samples out of the total of 103 samples. In each sub-figure, the green dots represent all cells from all samples, whereas the blue dots correspond to celles in one particular sample. These 6 samples belong two MOAs. The first three are Aurora Kinase inhibitors (Aur), and the last three are labeled as general Kinase inhibitors (Ki). The difference between the two MOAs is not clearly observed. 
 <img src="https://cloud.githubusercontent.com/assets/18299367/15306756/61f952ea-1b9b-11e6-85d2-6aff1a9c0b73.png" width="1000"> 
+
+
+#####tSNE visualization of single cells 
+tSNE can be applied to reduce the 29-dimensional "union" sample into 2D. The resulting 2D data is visualized by scatter plot and contour plot. Similar to PCA, the tSNE visualization appears to be one smear. No clear subpopulations are observed. 
+<img src="https://cloud.githubusercontent.com/assets/18299367/15306757/65d47a34-1b9b-11e6-91f2-18e78c571e12.png" width="700" height="300">
+
+However, the tSNE visualization is helpful in separating sampels with different MOAs. Below shows the same set of 6 selected samples, using the tSNE visualization as the background landscape. We can clearly observe that the first 3 samples (Aurora Kinase inhibitors) are similar to each other, the last 3 samples (Kinase inhibitors) are similar to each other, and the two groups are different. 
+<img src="https://cloud.githubusercontent.com/assets/18299367/15306760/68c8c8e4-1b9b-11e6-84c9-74eabd22f59c.png" width="1000"> 
 
 
 

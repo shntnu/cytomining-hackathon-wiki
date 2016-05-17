@@ -50,5 +50,8 @@ However, according to the MST visualization of the pairwise EMD matrix, the two 
 
 
 #####Compare Corr and EMD
-As a direct comparison of the pairwise correlation distance matrix and the pairwise EMD matrix, a scatter plot between the two is shown below. 
+As a direct comparison of the pairwise correlation distance matrix and the pairwise EMD matrix, a scatter plot between the two is shown below. The two distance matrices agree well with each other, as both are derived based on the probability distributions in SPADE. In this example, although EMD takes into account the SPADE tree structure, it did not out perform correlation distance. In other datasets, it has been observed that EMD coupled with SPADE can be beneficial. 
 <img src="https://cloud.githubusercontent.com/assets/18299367/15306771/7a64d07a-1b9b-11e6-8ddf-8074fedbf07a.png" width="500"> 
+
+
+NOTE: one can imagine pairwise distance derived from the PCA or tSNE visualizations. However, additional methodology is needed to define distance between two empirical distributions (represented by two sets of points), perhaps kernel-based density estimation combined with KL divergence. 

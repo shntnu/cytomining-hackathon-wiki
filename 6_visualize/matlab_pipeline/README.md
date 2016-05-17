@@ -14,7 +14,7 @@ Read data for each sample. Pool them together to form a "union" sample that cont
 
 #####PCA visualization of single cells 
 Take the "union" sample and perform PCA to reduce this 29-dimensional dataset to 2D. The resulting 2D data can be visualized by the scatter plot and contour plot below. The two axes correspond to the two principle components. In the scatter plot, each dot represents one cell. The contour plot shows the density of cells in this 2D visualization. 
-<img src="https://cloud.githubusercontent.com/assets/18299367/15306752/5e8fbaae-1b9b-11e6-8e1a-f8e4a1aa8283.png" width="500">
+<img src="https://cloud.githubusercontent.com/assets/18299367/15306752/5e8fbaae-1b9b-11e6-8e1a-f8e4a1aa8283.png" width="700" height="300">
 
 Visualization of single cells (PCA, tSNE, SPADE). Input of this step is the pooled data matrix. The output is a visualization (map) that visualizes either the data points/cells (PCA and tSNE), or a tree representation of the structure/skeleton of the data (SPADE). (2.1) We can color the visualization by a particular marker. The resulting colored visualization tell us which part of the visualization is high for the marker, which part is low for the marker. Doing this for all the markers one-by-one will show us which part of the visualization is positive for what features, and help us to understand the morphologies corresponding to various parts of the visualization. (2.2) We can color the visualization by distribution of cells in a particular sample. The resulting colored visualization tell us which part of the visualization is occupied by cells in the sample, or in other words, what morphologies are present in the sample with what probability.
 

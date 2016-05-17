@@ -14,7 +14,7 @@ Read data for each sample. Pool them together to form a "union" sample that cont
 
 #####PCA visualization of single cells 
 Take the "union" sample and perform PCA to reduce this 29-dimensional dataset to 2D. The resulting 2D data can be visualized by the scatter plot and contour plot below. The two axes correspond to the two principle components. In the scatter plot, each dot represents one cell. The contour plot shows the density of cells in this 2D visualization. 
-<img src="https://cloud.githubusercontent.com/assets/18299367/15306752/5e8fbaae-1b9b-11e6-8e1a-f8e4a1aa8283.png" width="700" height="300">
+<img src="https://cloud.githubusercontent.com/assets/18299367/15306752/5e8fbaae-1b9b-11e6-8e1a-f8e4a1aa8283.png" width="600" height="300">
 
 The PCA visualization of the "union" sample can be used as a background landscape to visualize each individual sample. Below shows 6 selected samples out of the total of 103 samples. These 6 samples belong two MOAs. The first three are Aurora Kinase inhibitors (Aur), and the last three are labeled as general Kinase inhibitors (Ki). We can see the similarities 
 <img src="https://cloud.githubusercontent.com/assets/18299367/15306756/61f952ea-1b9b-11e6-85d2-6aff1a9c0b73.png" width="1000"> 

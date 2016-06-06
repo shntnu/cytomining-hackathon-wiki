@@ -1,25 +1,9 @@
 Normalisation and simple transformation
 
-Morphological profiling features typically measure diverse 
-cellular phenotypes such as covering intensity, shape, and texture. 
-Because of the various physical measures their statistical distributions 
-can show very diverse shapes (e.g. poisson, normal, negativ-binomial). 
-This is at odds with feature distribution shapes from other profiling 
-technologies such as gene expression, which tend to be more homogeneous 
-since the quantities being measured are usually all counts, or all intensities. 
-Feature transformation is therefore a critical consideration for morphological profiling. 
-The standard in the field currently is to perform some type of logarithmic 
-transformation, which tends to make feature distributions more symmetric 
-and homoskedastic, and generally leads to superior model fits when 
-correcting for spatial effects or performing downstream statistical analysis.
-(Durbin et al. Bioinf,2002, Huber et al. Bioinf,2002)
-A generalized logarithm has been successfully applied in recent profiling 
-screens (Laufer et al. NatMeth, 2013, Fischer et al. Elife, 2015), 
-which behaves as the natural logarithm for high feature values, and uses a 
-shrinkage parameter to control noise, for negative or near-zero feature values. 
-The shrinkage parameter can be chosen empirically, or more systematically using 
-packages such as vsn (an approach that gained popularity in the microarray field,Huber et al. Bioinf,200). 
-Transformation can be done using the cell-level data, or using per-well profiles.
+Morphological profiling typically combines features that are fundamentally different in nature, such as intensity, shape, and texture descriptors. Where other profiling methods such as gene expression analysis exclusively generate counts (RNA-Seq) or fluorescence intensity values (microarrays), such homogeneity cannot be assumed for morphological profiles, As a result, we encounter a considerable heterogeneity in the shape of feature value distributions. 
+This critically affects downstream analysis methods that require features to be on comparable scales (e.g. supervised and unsupervised machine learning). Simple mathematical transformations are therefore frequently applied to render feature distributions more comparable, with symmetry and homoscedasticity being two of the most important evaluation parameters.
+Logarithmic transformations are especially popular and were found to improve error correction and downstream statistical analyses (Durbin et al. Bioinf,2002, Huber et al. Bioinf,2002). Recent profiling screens have successfully adopted a generalized logarithmic function that avoids problems with non-positive feature values (Laufer et al. NatMeth, 2013, Fischer et al. Elife, 2015). For high feature values, it approximates log(x). Its behavior for small absolute values depends on a shrinkage parameter c. For negative values, it approximates –log(-x) (up to a constant dependent on c).
+However, it is unlikely that a single transformation will be suitable for all feature types and applications. The necessity of feature transformations should be carefully evaluated for each project.  We recommend carefully studying the effects of feature transformations using diagnostic measures and plots (such as cumulative distribution curves).
 
 In all profiling screens, diagnostic plots (such as plate plots or replicate scatters)
 should be generated and inspected in order to assess for systematic artifacts. If 

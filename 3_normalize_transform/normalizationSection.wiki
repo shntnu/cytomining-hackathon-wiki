@@ -1,24 +1,22 @@
 Normalization and simple transformation
 
-Morphological profiles are typically assembled from features that are fundamentally different in nature, e.g. intensity, shape, and texture descriptors. Where other profiling methods such as gene expression analysis exclusively measure counts (RNA-Seq) or fluorescence intensity values (microarrays), such homogeneity cannot be assumed for morphological profiles. As a result, we encounter considerable heterogeneity in the shape of feature value distributions.
+Morphological profiles are typically assembled from features that are fundamentally different in nature, e.g. intensity, shape, and texture descriptors. While other profiling methods such as gene expression analysis exclusively measure counts (RNA-Seq) or fluorescence intensity values (microarrays), such homogeneity cannot be assumed for morphological profiles. As a result, we encounter considerable heterogeneity in the shape of feature value distributions.
 
-These differences in distribution critically affect downstream analysis methods that require features to be on comparable scales (e.g. supervised and unsupervised machine learning). Simple mathematical transformations are therefore frequently applied to render feature distributions more comparable, with symmetry and homoscedasticity being two of the most important desirable characteristics.
+These differences in distributions critically affect downstream analysis methods that require features to be on comparable scales (e.g. supervised and unsupervised machine learning). Simple mathematical transformations are therefore frequently applied to render feature distributions more comparable, with symmetry and homoscedasticity being two of the most important desirable characteristics.
 
 Logarithmic transformations are especially popular and were found to improve downstream error correction and statistical analyses (Durbin et al. Bioinf, 2002, Huber et al. Bioinf, 2002). Recent profiling screens have successfully adopted a generalized logarithmic function (Huber et al., Bioinformatics, 2002) that avoids problems with non-positive feature values (Laufer et al. Nat. Meth., 2013, Fischer et al. eLife, 2015). For high feature values, it approximates log(x). Its behavior for small absolute values depends on a shrinkage parameter c. For negative values, it approximates –log(-x) (up to a constant dependent on c).
 
-However, it is unlikely that a single transformation will be suitable for all feature types and applications. The necessity of feature transformations should be carefully evaluated for each project. We recommend studying the effects of feature transformations using diagnostic measures and plots (such as cumulative distribution curves).
+However, it is unlikely that a single transformation will be suitable for all feature types and applications. The necessity of feature transformations should be carefully evaluated for each project. We recommend studying the effects of feature transformations using diagnostic measures and plots (such as cumulative distribution curves and skewness measures).
 
+A critical step in all high-throughput experiments is the analysis and correction of systematic data artifacts. Most commonly, these include spatial (position on a plate), temporal (early vs. late samples), and batch effects. Again, diagnostic measures and plots should be used to identify systematic biases in the data set. For example plotting representative controls over the different covariates (time, batch, plate) can reveal if and how these affect the general bahaviour of the profiles.
 
-
-A critical step in all high-throughput experiments is the analysis and correction of systematic data artifacts. Most commonly, these include spatial (position on a plate), temporal (early vs. late samples), and batch effects. Again, diagnostic measures and plots should be used to identify systematic biases in the data set. ## [examples?]
-
-Optimally, potential biases would be addressed before data collection and minimized in the experimental design. For example, sample layouts can be randomized and wells on the edge of microscopy plates are often not used for any sample. Unfortunately, many common plate layouts place neutral control samples on the edge wells.
+Optimally, potential biases would be addressed before data collection and minimized in the experimental design. For example, sample layouts can be randomized and wells on the edge of microscopy plates are often not used for any sample(Bray, A., Carpenter, Eli Lilly & Company and the National Center for Advancing Translational Sciences,2004). Unfortunately, many common plate layouts place neutral control samples on the edge wells.
 
 Computational methods to reduce spatial artifacts include the B-score (Brideau et al. J Biomol Screen. 2003) and locfit (Loader, C. 1999, Springer NY). B-score normalization implements a two-way median polish over row and columns. Locfit and related methods such as running averages fit a smoothing surface to the plate using local spatial averaging, and return fitting residuals as spatial-corrected values. Both B-score and locfit methods are available in the Bioconductor high-throughput screening package cellHTS2 (Boutros et al. 2006, GenomeBiol), and are readily applicable to morphological profiling data. However, these methods cannot be applied if the experimental design includes non-random sample layout.
 
 Longer-running experiments often show temporal artifacts like a systematic drift in sample values over time. Similar to spatial effects, these can be corrected using smoothing techniques. 
 
-Finally, batch effects can arise from a variety of sources. ## [more detail? examples for methods?]
+Finally, batch effects can arise from a variety of sources, for example systematic error from cell seeding in batches of plates on different days or delayed seeding of cells between the first and the last plate of a batch.
 
 Normalization in morphological profiling typically refers to the scoring of feature values relative to controls so that the magnitude of a phenotypic effect can be assessed, and feature values can be put on a common scale.
 

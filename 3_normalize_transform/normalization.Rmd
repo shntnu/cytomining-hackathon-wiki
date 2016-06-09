@@ -1,21 +1,187 @@
+---
+title: "Morphological profiling workflows: Transformation and Normalization"
+author: "Cytomining Hackathon attendees: Joseph Barry, Florian Heigwer, Mathias Wawer"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Morphological profiling workflows}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(magrittr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+futile.logger::flog.threshold(futile.logger::WARN)
+```
+
+
+## Load data
+First, load the data, which is stored in a database backend 
+
+```{r}
+fixture <- '~/tmp/BBBC021.sqlite'
+
+if (!file.exists(fixture)) {
+  download.file("http://www.broadinstitute.org/~shsingh/BBBC021.sqlite", 
+              destfile = fixture, 
+              method = "curl", 
+              quiet = FALSE, mode = "w",
+              cacheOK = TRUE,
+              extra = getOption("download.file.extra"))
+}
+
+db <- src_sqlite(path = fixture)
+```
+
+
+```{r}
+images <-
+  tbl(src = db, "supplement_Image") 
+
+objects <- 
+  tbl(src = db, "supplement_Object") 
+
+metadata <- 
+  tbl(src = db, "supplement_GroundTruth") %>%
+  rename(Image_Metadata_Compound = compound,
+         Image_Metadata_Concentration = concentration,
+         Image_Metadata_MOA = moa) 
+
+images %<>%
+  inner_join(
+    metadata,
+    by = c("Image_Metadata_Compound", "Image_Metadata_Concentration")
+  )
+
+data <-
+  inner_join(images,
+             objects,
+             by = c("TableNumber", "ImageNumber")
+  ) %>%
+  compute()
+
+```
+
+Subset data for easier computation
+
+```{r}
 df <- collect(data)
-dim(df)
+unique(df$Image_Metadata_Plate_DAPI) # check for the unique plate metadata
+dfs <- filter(df, grepl("Week[1|2]_", Image_Metadata_Plate_DAPI)) # only keep those plaze containning data fom week 1 and 2
+dim(dfs) #get a glimpse of the size of the acquired data set
+```
 
-# subset to a smaller table for easier computation#
-unique(df$Image_Metadata_Plate_DAPI)
-dfs <- filter(df, grepl("Week[1|2]_", Image_Metadata_Plate_DAPI))
-dim(dfs)
+In the next step we choose our favourite features for illustration and compare before and after transformation.
 
+```{r}
 feat <- grep("Nuclei_|Cells_|Cytoplasm_", colnames(dfs), value=TRUE)
 nFeat <- length(feat)
-
-library(ggplot2)
-
-
 favFeat <- c("Nuclei_AreaShape_Area", 
              "Cells_Neighbors_NumberOfNeighbors_10",
              "Cells_Intensity_MeanIntensity_CorrActin",
              "Nuclei_Texture_SumEntropy_CorrDAPI_10")
 
-library(tidyr)
-dfl <- dfs[, favFeat]
+dfl <- gather(dfs[, favFeat], feature, value)
+ggplot(dfl, aes(x=feature, y=value))+facet_wrap(~feature, scale="free") + 
+  geom_boxplot() +
+  theme_classic()
+
+dflLog <- mutate(dfl, value=log(value))
+ggplot(dflLog, aes(x=feature, y=value))+facet_wrap(~feature, scale="free") + 
+  geom_boxplot() +
+  theme_classic()
+#due to negative and zero values in the data frame a lot of NAs are produced by the logarithm
+sum(is.na(dflLog$value) | is.infinite(dflLog$value)) #count the non-finite values produced by regular logarithm
+```
+
+For many skewed feature density distributions log looks like a good transformation (e.g. Nuclei_AreaShape_Area). However over 3,000 cells have been removed. To solve this problem we instead try a generalized log tranform.
+
+```{r}
+glog <- function(x, c) log( (x + (x ^ 2 + c ^ 2) ^ 0.5 ) / 2) #define the glog-transform
+
+#define some helper function to transform each feature individually
+glogTransform <- function(x, q=0.05) {
+    xq <- quantile(x, q, na.rm=TRUE)
+    glog(x, xq)
+}
+dfsGlog <- dfs %>% mutate_each_(funs(glogTransform), feat)
+dflGlog <- gather(dfsGlog[, favFeat], feature, value)
+ggplot(dflGlog, aes(x=feature, y=value))+facet_wrap(~feature, scale="free")+ 
+  geom_boxplot() +
+  theme_classic()
+sum(is.na(dflLog$value) | is.infinite(dflLog$value)) #count the non-finite values produced by regular logarithm
+```
+
+As a result we obtained transformed data without having to throw away any negative values. Of course, not all distributions will benefit equally from the transformation.
+
+Plate and batch effects can be assed by plotting representative measures, which ,in principle, should be independent of the plate and batch against those covariates. In a perfect dataset one would expect there means to be placed on a straight average line through the plate or batch or any covariate.
+
+```{r}
+colnames(dfsGlog[,! colnames(dfsGlog) %in% feat])
+dfsGlog$well=dfsGlog$Image_Metadata_Well_DAPI
+dfsGlog$plate=dfsGlog$Image_Metadata_Plate_DAPI
+
+ggplot(dfsGlog,aes(y=Cells_Intensity_MeanIntensity_CorrActin,x=well)) + geom_violin() + geom_hline(yintercept = mean(dfsGlog$Cells_Intensity_MeanIntensity_CorrActin))
+
+ggplot(dfsGlog,aes(y=Cells_Intensity_MeanIntensity_CorrActin,x=plate)) + geom_violin() + geom_hline(yintercept = mean(dfsGlog$Cells_Intensity_MeanIntensity_CorrActin))
+```
+
+Here, Intensity looks like it does not need any normalization as the estamated means do not systematically or drastically deviate from the mean. Are other features the same? To clarify this question we choose to calculate the standard deviation of the plate medians per feature.
+
+```{r}
+plateMedianAcrossFeatures <- dfsGlog %>% group_by(plate) %>% summarize_each_(funs(median), feat) 
+
+ftSdAcrossPlateMedians <- plateMedianAcrossFeatures %>% summarize_each_(funs(sd), feat)
+ftSdAcrossPlateMedians <- unlist(ftSdAcrossPlateMedians)
+ftSdAcrossPlateMedians <- ftSdAcrossPlateMedians[order(ftSdAcrossPlateMedians, decreasing=TRUE)]
+dfFt <- data.frame(rank=seq_along(ftSdAcrossPlateMedians), sd=ftSdAcrossPlateMedians)
+ggplot(dfFt, aes(x=rank, y=sd))+geom_point()+geom_hline(yintercept=0.3)
+dfExclude <- filter(dfFt, sd >= 0.3)
+print(dfExclude)
+```
+
+We choose to exclude features that have a high variability across screening batches, since we do not expect an entire plate to be significantly different than the others.
+
+Most features have low variability according to the above measure. We do not see the need to perform additional batch normalization.
+
+```{r}
+dim(dfsGlog)
+dfsGlog <- select(dfsGlog, -one_of(as.character(dfExclude$lab)))
+dim(dfsGlog)
+```
+
+From there we can assume the dataset to be unbiased so we can perform all further scaling steps on the basis of the entire dataset regardless of well or plate location. There are two ways of performing scaling. The first estimates the median(mean) and mad (sd) on the population of negative controls (here: DMSO). And the second uses the entire dataset. When z-scaling using the negative controls one can infer from the z-score if a perturbation is more or less distant from the negative controls (so its general activity). On the other hand, when using the entire dataset for scaling we can infer information on the significance of the perturbation effect compared to all other perturbations. If the assumption hold true that most compounds of the library are inactive both approaches lead to the same result.
+
+Where are the negative controls?
+
+```{r}
+colnames(dfsGlog)[! colnames(dfsGlog) %in% feat]
+unique(dfsGlog$Image_Metadata_Compound)
+dfDMSO <- filter(dfsGlog, Image_Metadata_Compound == "DMSO")
+ggplot(dfDMSO,aes(y=Cells_Intensity_MeanIntensity_CorrActin,x=plate)) + geom_violin()
+unique(dfDMSO$well)
+```
+
+```{r}
+dfsGlog$isDMSO <- dfsGlog$Image_Metadata_Compound == "DMSO"
+ggplot(dfsGlog, aes(x=Cytoplasm_Zernike_4_0, col=isDMSO))+geom_density()
+feat <- feat[! feat %in% dfExclude$lab]
+controlMedian <- dfsGlog %>% group_by(isDMSO) %>% summarize_each_(funs(median), feat)
+controlDiff <- controlMedian %>% summarize_each_(funs(diff), feat)
+controlDiff <- unlist(controlDiff)
+controlDiff <- controlDiff[order(controlDiff, decreasing=TRUE)]
+head(controlDiff, 20)
+```
+
+DMSO appears to be mimicking the behaviour of the other wells.
+
+```{r}
+zDMSO <- function(x, isDMSO) (x-median(x[isDMSO], na.rm=TRUE))/(mad(x[isDMSO], na.rm=TRUE)*1.48)
+
+#lapply(split(dfsGlog,plate),function(x){apply(2,zDMSO,)
+
+dfDMSO <- dfsGlog %>% group_by(plate) %>% mutate_each_(funs(zDMSO(., isDMSO)), feat)
+```

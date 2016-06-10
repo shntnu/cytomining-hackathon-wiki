@@ -34,10 +34,7 @@ if (!file.exists(fixture)) {
 }
 
 db <- src_sqlite(path = fixture)
-```
 
-
-```{r}
 images <-
   tbl(src = db, "supplement_Image") 
 
@@ -74,7 +71,7 @@ dfs <- filter(df, grepl("Week[1|2]_", Image_Metadata_Plate_DAPI)) # only keep th
 dim(dfs) #get a glimpse of the size of the acquired data set
 ```
 
-In the next step we choose our favourite features for illustration and compare before and after transformation.
+In the next step we choose our favourite features for illustration and compare their distributions before and after transformation.
 
 ```{r}
 feat <- grep("Nuclei_|Cells_|Cytoplasm_", colnames(dfs), value=TRUE)
@@ -117,7 +114,7 @@ sum(is.na(dflLog$value) | is.infinite(dflLog$value)) #count the non-finite value
 
 As a result we obtained transformed data without having to throw away any negative values. Of course, not all distributions will benefit equally from the transformation.
 
-Plate and batch effects can be assed by plotting representative measures, which ,in principle, should be independent of the plate and batch against those covariates. In a perfect dataset one would expect there means to be placed on a straight average line through the plate or batch or any covariate.
+Plate and batch effects can be assessed d by plotting representative measures, which ,in principle, should be independent of the plate and batch against those covariates. In a perfect dataset one would expect there means to be placed on a straight average line through the plate or batch for any covariate.
 
 ```{r}
 colnames(dfsGlog[,! colnames(dfsGlog) %in% feat])
@@ -127,6 +124,7 @@ dfsGlog$plate=dfsGlog$Image_Metadata_Plate_DAPI
 ggplot(dfsGlog,aes(y=Cells_Intensity_MeanIntensity_CorrActin,x=well)) + geom_violin() + geom_hline(yintercept = mean(dfsGlog$Cells_Intensity_MeanIntensity_CorrActin))
 
 ggplot(dfsGlog,aes(y=Cells_Intensity_MeanIntensity_CorrActin,x=plate)) + geom_violin() + geom_hline(yintercept = mean(dfsGlog$Cells_Intensity_MeanIntensity_CorrActin))
+
 ```
 
 Here, Intensity looks like it does not need any normalization as the estamated means do not systematically or drastically deviate from the mean. Are other features the same? To clarify this question we choose to calculate the standard deviation of the plate medians per feature.
@@ -137,7 +135,7 @@ plateMedianAcrossFeatures <- dfsGlog %>% group_by(plate) %>% summarize_each_(fun
 ftSdAcrossPlateMedians <- plateMedianAcrossFeatures %>% summarize_each_(funs(sd), feat)
 ftSdAcrossPlateMedians <- unlist(ftSdAcrossPlateMedians)
 ftSdAcrossPlateMedians <- ftSdAcrossPlateMedians[order(ftSdAcrossPlateMedians, decreasing=TRUE)]
-dfFt <- data.frame(rank=seq_along(ftSdAcrossPlateMedians), sd=ftSdAcrossPlateMedians)
+dfFt <- data.frame(rank=seq_along(ftSdAcrossPlateMedians), sd=ftSdAcrossPlateMedians,lab=as.character(names(ftSdAcrossPlateMedians)))
 ggplot(dfFt, aes(x=rank, y=sd))+geom_point()+geom_hline(yintercept=0.3)
 dfExclude <- filter(dfFt, sd >= 0.3)
 print(dfExclude)
@@ -145,15 +143,25 @@ print(dfExclude)
 
 We choose to exclude features that have a high variability across screening batches, since we do not expect an entire plate to be significantly different than the others.
 
-Most features have low variability according to the above measure. We do not see the need to perform additional batch normalization.
+Most features have low variability according to the above measure. We do not see the need to perform additional batch normalization. However for illustration purposes we perform a simple median normalization on each plate. removing per plate biases of measurements.
 
 ```{r}
 dim(dfsGlog)
+
+norm.fun<-function(x){
+  return(x-median(x))
+}
+
+dfsGlog %<>% group_by(plate) %>% mutate_each_(funs(norm.fun), feat) %>% ungroup()
+
 dfsGlog <- select(dfsGlog, -one_of(as.character(dfExclude$lab)))
+
+ggplot(dfsGlog,aes(y=Cells_Intensity_MeanIntensity_CorrActin,x=plate)) + geom_violin() + geom_hline(yintercept = mean(dfsGlog$Cells_Intensity_MeanIntensity_CorrActin))
+
 dim(dfsGlog)
 ```
 
-From there we can assume the dataset to be unbiased so we can perform all further scaling steps on the basis of the entire dataset regardless of well or plate location. There are two ways of performing scaling. The first estimates the median(mean) and mad (sd) on the population of negative controls (here: DMSO). And the second uses the entire dataset. When z-scaling using the negative controls one can infer from the z-score if a perturbation is more or less distant from the negative controls (so its general activity). On the other hand, when using the entire dataset for scaling we can infer information on the significance of the perturbation effect compared to all other perturbations. If the assumption hold true that most compounds of the library are inactive both approaches lead to the same result.
+From there we can assume the dataset to be unbiased so we can perform all further scaling steps on the basis of the entire dataset regardless of well or plate location. There are two ways of performing scaling. The first estimates the median(mean) and mad (sd) on the population of negative controls (here: DMSO). And the second uses the entire dataset. When z-scaling using the negative controls one can infer from the z-score if a perturbation is more or less distant from the negative controls (so its general activity). On the other hand, when using the entire dataset for scaling we can infer information on the significance of the perturbation effect compared to all other perturbations. If the assumption holds true that most compounds of the library are inactive both approaches lead to the same result.
 
 Where are the negative controls?
 
@@ -181,7 +189,25 @@ DMSO appears to be mimicking the behaviour of the other wells.
 ```{r}
 zDMSO <- function(x, isDMSO) (x-median(x[isDMSO], na.rm=TRUE))/(mad(x[isDMSO], na.rm=TRUE)*1.48)
 
-#lapply(split(dfsGlog,plate),function(x){apply(2,zDMSO,)
+dfDMSO <- dfsGlog %>% group_by(plate) %>% mutate_each_(funs(zDMSO(., isDMSO)), feat) %>% ungroup()
+ggplot(dfsGlog,aes(y=Cells_Intensity_MeanIntensity_CorrActin,x=plate)) + geom_violin()
+ggplot(dfDMSO,aes(y=Cells_Intensity_MeanIntensity_CorrActin,x=plate)) + geom_violin()
 
-dfDMSO <- dfsGlog %>% group_by(plate) %>% mutate_each_(funs(zDMSO(., isDMSO)), feat)
+#alternatively one can estimate the median to scale to from each plate and the sd or mad from the entire dataset in order to gain statistical power on the mad estimation
+zDMSO.alt <- function(x, isDMSO,m){
+  (x-median(x[isDMSO], na.rm=TRUE))/m*1.48
+}
+
+mads=summarise_each_(dfsGlog,funs(mad(.,na.rm = T)),feat)
+dfDMSO.mad=dfsGlog
+for(f in feat){
+  dfDMSO.mad %<>% group_by(plate) %>% mutate_each_(funs(zDMSO.alt(., isDMSO,mads[[f]])), f) %>% ungroup()
+}
+
+ggplot(dfsGlog,aes(y=Cells_Intensity_MeanIntensity_CorrActin,x=plate)) + geom_violin()
+ggplot(dfDMSO.mad,aes(y=Cells_Intensity_MeanIntensity_CorrActin,x=plate)) + geom_violin()
+
 ```
+
+From the diagnostic plots we could conclude that the robust Z-score scaling applied by estimating the median on each plates negative controls and the mad on the controls of the entire data set yielded the best result of normalization. This approach works best if samples are randomly distributed along plates of the dataset and controls are independent of screening batch. Thus at the end of this analysis step we optained a dataframe (dfDMSO.mad) where each feature was transformed, normalized and scaled robustly and both the median values as well as the variances are stabalized along all axes of the experimental design.
+
